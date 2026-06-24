@@ -11,7 +11,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [creando, setCreando] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
+  const [supabase] = useState(() => createClient());
 
   useEffect(() => {
     cargarEscaletas();
