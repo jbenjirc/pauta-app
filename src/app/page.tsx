@@ -21,13 +21,13 @@ export default function LandingPage() {
 
           {/* Botones de Autenticación */}
           <Link
-            href="/login"
+            href="/entrar"
             className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
           >
             Iniciar Sesión
           </Link>
           <Link
-            href="/register"
+            href="/registro"
             className="text-sm font-medium bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
           >
             Registrarse
@@ -48,7 +48,7 @@ export default function LandingPage() {
         </p>
         <div className="flex gap-4">
           <Link
-            href="/register"
+            href="/registro"
             className="text-base font-semibold bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-xl transition-colors shadow-md"
           >
             Comenzar ahora
