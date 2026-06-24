@@ -23,8 +23,8 @@ export default function RegisterPage() {
     try {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
-      alert("¡Cuenta creada con éxito! Serás redirigido al editor.");
-      router.push("/editor");
+      alert("¡Cuenta creada con éxito! Inicia sesión para empezar.");
+      router.push("/entrar");
     } catch (error: any) {
       setErrorMsj(error.message || "Ocurrió un error al crear la cuenta.");
     } finally {
@@ -95,7 +95,7 @@ export default function RegisterPage() {
 
         <div className="mt-6 text-center">
           <Link
-            href="/login"
+            href="/entrar"
             className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
           >
             ¿Ya tienes cuenta? Inicia sesión

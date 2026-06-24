@@ -26,7 +26,7 @@ export default function LoginPage() {
         password,
       });
       if (error) throw error;
-      router.push("/editor");
+      router.push("/dashboard");
     } catch (error: any) {
       setErrorMsj(error.message || "Credenciales incorrectas.");
     } finally {
@@ -96,7 +96,7 @@ export default function LoginPage() {
 
         <div className="mt-6 text-center">
           <Link
-            href="/register"
+            href="/registro"
             className="text-sm text-gray-500 hover:text-orange-600 transition-colors"
           >
             ¿No tienes cuenta? Regístrate aquí
