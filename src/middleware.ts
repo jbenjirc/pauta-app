@@ -41,11 +41,11 @@ export async function middleware(request: NextRequest) {
   }
 
   // REGLA: Si SÍ hay usuario y está en la pantalla de login (/), lo mandamos directo al "/editor"
-  if (user && request.nextUrl.pathname === "/") {
-    const url = request.nextUrl.clone();
-    url.pathname = "/editor";
-    return NextResponse.redirect(url);
-  }
+  //if (user && request.nextUrl.pathname === "/") {
+  //  const url = request.nextUrl.clone();
+  //  url.pathname = "/editor";
+  //  return NextResponse.redirect(url);
+  //}
 
   return supabaseResponse;
 }

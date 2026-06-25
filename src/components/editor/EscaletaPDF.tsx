@@ -1,8 +1,6 @@
-// src/components/editor/EscaletaPDF.tsx
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { BloqueCalculado } from "@/lib/types";
 
-// 1. Definición de estilos del PDF (Estilo clásico y limpio de oficina/iglesia)
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -10,20 +8,9 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     color: "#333333",
   },
-  header: {
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#111111",
-  },
-  subtitle: {
-    fontSize: 11,
-    color: "#666666",
-    marginTop: 4,
-  },
+  header: { marginBottom: 20, textAlign: "center" },
+  title: { fontSize: 18, fontWeight: "bold", color: "#111111" },
+  subtitle: { fontSize: 11, color: "#666666", marginTop: 4 },
   metaContainer: {
     flexDirection: "row",
     borderWidth: 1,
@@ -33,19 +20,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 6,
   },
-  metaColumn: {
-    flex: 1,
-    gap: 4,
-  },
-  metaText: {
-    fontSize: 9,
-    color: "#4b5563",
-  },
-  bold: {
-    fontWeight: "bold",
-    color: "#111111",
-  },
-  // Estilos de la Tabla
+  metaColumn: { flex: 1, gap: 4 },
+  metaText: { fontSize: 9, color: "#4b5563" },
+  bold: { fontWeight: "bold", color: "#111111" },
   table: {
     width: "auto",
     borderStyle: "solid",
@@ -54,10 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     overflow: "hidden",
   },
-  tableRowHeader: {
-    flexDirection: "row",
-    backgroundColor: "#f97316", // El naranja característico de tu diseño original
-  },
+  tableRowHeader: { flexDirection: "row", backgroundColor: "#f97316" }, // Naranja
   tableRow: {
     flexDirection: "row",
     borderBottomWidth: 1,
@@ -69,11 +43,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 9,
   },
-  tableCell: {
-    margin: 6,
-    fontSize: 9,
-  },
-  // Anchos específicos de columnas (Deben sumar 100%)
+  tableCell: { margin: 6, fontSize: 9 },
   colNo: { width: "5%" },
   colHora: { width: "10%" },
   colDur: { width: "10%" },
@@ -83,45 +53,43 @@ const styles = StyleSheet.create({
 });
 
 type EscaletaPDFProps = {
-  horaInicio: string;
+  escaleta: any; // Recibimos toda la escaleta para los títulos
   bloques: BloqueCalculado[];
 };
 
-// 2. Componente estructural del PDF
-export default function EscaletaPDF({ horaInicio, bloques }: EscaletaPDFProps) {
+export default function EscaletaPDF({ escaleta, bloques }: EscaletaPDFProps) {
   return (
     <Document>
       <Page size="LETTER" style={styles.page}>
-        {/* Encabezado */}
         <View style={styles.header}>
-          <Text style={styles.title}>Programa Culto Media Semana</Text>
+          <Text style={styles.title}>
+            {escaleta?.titulo_programa || "Programa sin título"}
+          </Text>
           <Text style={styles.subtitle}>
-            Iglesia Adventista Iglesia Central
+            {escaleta?.nombre_iglesia || "Iglesia"}
           </Text>
         </View>
 
-        {/* Bloque de metadatos rápidos */}
         <View style={styles.metaContainer}>
           <View style={styles.metaColumn}>
             <Text style={styles.metaText}>
               <Text style={styles.bold}>Inicio del Programa: </Text>{" "}
-              {horaInicio} hrs
+              {escaleta?.hora_inicio_programa} hrs
             </Text>
             <Text style={styles.metaText}>
-              <Text style={styles.bold}>Formato: </Text> Escaleta / Minuto a
-              minuto
+              <Text style={styles.bold}>Fecha: </Text>{" "}
+              {escaleta?.fecha_programa || "---"}
             </Text>
           </View>
           <View style={styles.metaColumn}>
             <Text style={styles.metaText}>
-              <Text style={styles.bold}>Estado: </Text> Confirmado
+              <Text style={styles.bold}>Estado: </Text>{" "}
+              {escaleta?.estado || "Activo"}
             </Text>
           </View>
         </View>
 
-        {/* Tabla Estructurada */}
         <View style={styles.table}>
-          {/* Fila de Encabezados */}
           <View style={styles.tableRowHeader}>
             <Text
               style={[
@@ -154,7 +122,6 @@ export default function EscaletaPDF({ horaInicio, bloques }: EscaletaPDFProps) {
             </Text>
           </View>
 
-          {/* Filas Dinámicas */}
           {bloques.map((bloque, index) => (
             <View key={bloque.id} style={styles.tableRow}>
               <Text
@@ -170,7 +137,7 @@ export default function EscaletaPDF({ horaInicio, bloques }: EscaletaPDFProps) {
                 style={[
                   styles.tableCell,
                   styles.colHora,
-                  { fontWeight: "medium" },
+                  { fontWeight: "bold" },
                 ]}
               >
                 {bloque.horaInicioFormat}
@@ -193,7 +160,7 @@ export default function EscaletaPDF({ horaInicio, bloques }: EscaletaPDFProps) {
                 style={[
                   styles.tableCell,
                   styles.colActividad,
-                  { fontWeight: "medium" },
+                  { fontWeight: "bold" },
                 ]}
               >
                 {bloque.actividad || "---"}
