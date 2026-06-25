@@ -3,13 +3,28 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
-import { Plus, FileText, Loader2 } from "lucide-react";
-import Link from "next/link";
+import { Plus, Loader2 } from "lucide-react";
+import EscaletasGrid from "@/components/ui/EscaletasGrid";
+import ModalCrearEscaleta from "@/components/modals/ModalCrearEscaleta";
+import ModalVerEscaleta from "@/components/modals/ModalVerEscaleta";
 
 export default function DashboardPage() {
   const [escaletas, setEscaletas] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [creando, setCreando] = useState(false);
+
+  // Estados para los modales
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [previewData, setPreviewData] = useState<any>(null);
+
+  // Estado del formulario (Ahora incluye la fecha por defecto de hoy)
+  const [nuevoPrograma, setNuevoPrograma] = useState({
+    titulo: "",
+    color: "#EA580C",
+    horaInicio: "10:00",
+    fecha: new Date().toISOString().split("T")[0],
+  });
+
   const router = useRouter();
   const [supabase] = useState(() => createClient());
 
@@ -22,12 +37,8 @@ export default function DashboardPage() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) {
-        router.push("/entrar");
-        return;
-      }
+      if (!user) return router.push("/entrar");
 
-      // Traemos solo las escaletas del usuario ordenadas por edición reciente
       const { data, error } = await supabase
         .from("escaletas")
         .select("*")
@@ -36,39 +47,52 @@ export default function DashboardPage() {
       if (error) throw error;
       setEscaletas(data || []);
     } catch (error) {
-      console.error("Error al cargar escaletas:", error);
+      console.error("Error al cargar:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const crearNuevaEscaleta = async () => {
+  const generarSlug = (texto: string) => {
+    const base = texto
+      .toLowerCase()
+      .trim()
+      .replace(/[\s\W-]+/g, "-");
+    return `${base}-${Math.random().toString(36).substring(2, 6)}`;
+  };
+
+  const guardarNuevaEscaleta = async (e: React.FormEvent) => {
+    e.preventDefault();
     setCreando(true);
+
     try {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error("Sesión no válida");
 
-      // Insertamos una escaleta en blanco y pedimos que nos devuelva el ID
+      const slugGenerado = generarSlug(nuevoPrograma.titulo);
+
       const { data, error } = await supabase
         .from("escaletas")
         .insert({
           creador_id: user.id,
-          titulo_programa: "Nueva Escaleta",
-          es_plantilla: false,
-          es_publico: false,
+          titulo_programa: nuevoPrograma.titulo,
+          color_escaleta: nuevoPrograma.color,
+          hora_inicio_programa: nuevoPrograma.horaInicio,
+          fecha_programa: nuevoPrograma.fecha,
+          slug: slugGenerado,
+          estado: "activa",
+          favorito: false,
         })
         .select()
         .single();
 
       if (error) throw error;
-
-      // Redirigimos al editor dinámico con el nuevo UUID
-      router.push(`/editor/${data.id}`);
+      router.push(`/editor/${data.slug}`);
     } catch (error) {
       console.error("Error al crear:", error);
-      alert("Hubo un error al crear la escaleta.");
+      alert("Error al crear la escaleta.");
       setCreando(false);
     }
   };
@@ -82,9 +106,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 font-sans">
+    <div className="min-h-screen bg-gray-50 p-8 font-sans relative">
       <div className="max-w-6xl mx-auto">
-        {/* Cabecera del Dashboard */}
+        {/* Cabecera */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Mis Escaletas</h1>
@@ -93,66 +117,36 @@ export default function DashboardPage() {
             </p>
           </div>
           <button
-            onClick={crearNuevaEscaleta}
-            disabled={creando}
-            className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-sm disabled:opacity-70 w-full sm:w-auto justify-center"
+            onClick={() => setIsCreateOpen(true)}
+            className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-sm w-full sm:w-auto justify-center"
           >
-            {creando ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <Plus className="w-5 h-5" />
-            )}
-            {creando ? "Creando..." : "Nueva Escaleta"}
+            <Plus className="w-5 h-5" /> Nueva Escaleta
           </button>
         </div>
 
-        {/* Estado Vacío vs Cuadrícula de Tarjetas */}
-        {escaletas.length === 0 ? (
-          <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-12 text-center">
-            <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No tienes escaletas aún
-            </h3>
-            <p className="text-gray-500 mb-6">
-              Crea tu primer programa para empezar a organizar los tiempos en
-              cabina.
-            </p>
-            <button
-              onClick={crearNuevaEscaleta}
-              disabled={creando}
-              className="text-orange-600 font-medium hover:text-orange-700 transition-colors"
-            >
-              Crear mi primera escaleta &rarr;
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {escaletas.map((escaleta) => (
-              <Link href={`/editor/${escaleta.id}`} key={escaleta.id}>
-                <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md hover:border-orange-400 transition-all cursor-pointer group flex flex-col h-full relative overflow-hidden">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors mb-2 truncate">
-                      {escaleta.titulo_programa || "Sin título"}
-                    </h3>
-                    <p className="text-sm text-gray-500 mb-4 line-clamp-2">
-                      {escaleta.nombre_iglesia || "Sin iglesia asignada"}
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-400">
-                    <span>
-                      Editado:{" "}
-                      {new Date(escaleta.ultima_edicion).toLocaleDateString()}
-                    </span>
-                    <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-medium">
-                      Borrador
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
+        {/* Grid de Tarjetas */}
+        <EscaletasGrid
+          escaletas={escaletas}
+          onCardClick={(escaleta) => setPreviewData(escaleta)}
+          onCrearClick={() => setIsCreateOpen(true)}
+        />
       </div>
+
+      {/* Modales Inyectados */}
+      <ModalCrearEscaleta
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+        onSubmit={guardarNuevaEscaleta}
+        creando={creando}
+        formData={nuevoPrograma}
+        setFormData={setNuevoPrograma}
+      />
+
+      <ModalVerEscaleta
+        isOpen={!!previewData}
+        onClose={() => setPreviewData(null)}
+        escaleta={previewData}
+      />
     </div>
   );
 }

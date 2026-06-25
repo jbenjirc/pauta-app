@@ -101,6 +101,12 @@ export default function LoginPage() {
           >
             ¿No tienes cuenta? Regístrate aquí
           </Link>
+          <div>
+            <p>
+              Esta es una versión de prueba, usa test@pauta.com y test123 para
+              probar :)
+            </p>
+          </div>
         </div>
       </div>
     </div>
