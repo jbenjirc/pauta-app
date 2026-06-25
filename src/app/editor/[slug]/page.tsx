@@ -12,6 +12,8 @@ import {
   Palette,
   Building,
   FileDown,
+  CloudUpload,
+  CloudSync,
 } from "lucide-react";
 import Link from "next/link";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -21,6 +23,8 @@ import { calcularTiemposEscaleta } from "@/lib/timeEngine";
 import EscaletaTable from "@/components/editor/EscaletaTable";
 import EscaletaPDF from "@/components/editor/EscaletaPDF";
 import { Bloque } from "@/lib/types";
+import PanelControl from "@/components/editor/PanelControl";
+import ControlesAvanzadosSidebar from "@/components/editor/ControlesAvanzadosSidebar";
 
 export default function EditorPage() {
   const params = useParams();
@@ -34,6 +38,8 @@ export default function EditorPage() {
 
   const [escaleta, setEscaleta] = useState<any>(null);
   const [bloques, setBloques] = useState<any[]>([]);
+
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -153,6 +159,25 @@ export default function EditorPage() {
     }
   };
 
+  const calcularTiempoTranscurrido = (fechaString: string | null) => {
+    if (!fechaString) return "N/A";
+
+    const fecha = new Date(fechaString).getTime();
+    const ahora = new Date().getTime();
+    const segundos = Math.floor((ahora - fecha) / 1000);
+
+    if (segundos < 60) return "unos segundos";
+
+    const minutos = Math.floor(segundos / 60);
+    if (minutos < 60) return `${minutos} minuto${minutos !== 1 ? "s" : ""}`;
+
+    const horas = Math.floor(minutos / 60);
+    if (horas < 24) return `${horas} hora${horas !== 1 ? "s" : ""}`;
+
+    const dias = Math.floor(horas / 24);
+    return `${dias} día${dias !== 1 ? "s" : ""}`;
+  };
+
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -178,6 +203,13 @@ export default function EditorPage() {
         </Link>
 
         <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <CloudSync className="w-5 h-5 text-gray-400" />
+            <span className="text-gray-400 text-sm italic">
+              Guardado hace{" "}
+              {calcularTiempoTranscurrido(escaleta?.ultima_edicion)}
+            </span>
+          </div>
           {isMounted && (
             <PDFDownloadLink
               document={
@@ -210,7 +242,7 @@ export default function EditorPage() {
             {guardando ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <Save className="w-4 h-4" />
+              <CloudUpload className="w-4 h-4" />
             )}
             {guardando ? "Guardando..." : "Guardar"}
           </button>
@@ -218,91 +250,30 @@ export default function EditorPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-8">
-        {/* PANEL GENERAL */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Título del Programa
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none font-medium"
-                value={escaleta.titulo_programa || ""}
-                onChange={(e) =>
-                  setEscaleta({ ...escaleta, titulo_programa: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-                <Building className="w-4 h-4" /> Iglesia
-              </label>
-              <input
-                type="text"
-                placeholder="Ej. Central"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-                value={escaleta.nombre_iglesia || ""}
-                onChange={(e) =>
-                  setEscaleta({ ...escaleta, nombre_iglesia: e.target.value })
-                }
-              />
-            </div>
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-                  <Clock className="w-4 h-4" /> Inicio
-                </label>
-                <input
-                  type="time"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-                  value={escaleta.hora_inicio_programa || ""}
-                  onChange={(e) =>
-                    setEscaleta({
-                      ...escaleta,
-                      hora_inicio_programa: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-                  <Calendar className="w-4 h-4" /> Fecha
-                </label>
-                <input
-                  type="date"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-                  value={escaleta.fecha_programa || ""}
-                  onChange={(e) =>
-                    setEscaleta({ ...escaleta, fecha_programa: e.target.value })
-                  }
-                />
-              </div>
-              <div className="w-16">
-                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-                  <Palette className="w-4 h-4" />
-                </label>
-                <input
-                  type="color"
-                  className="w-full h-[42px] p-1 border border-gray-300 rounded-lg cursor-pointer"
-                  value={escaleta.color_escaleta || "#EA580C"}
-                  onChange={(e) =>
-                    setEscaleta({ ...escaleta, color_escaleta: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* TABLA MODULAR */}
+        {/* CONTROL DE LA ESCALETA */}
+        <PanelControl
+          escaleta={escaleta}
+          setEscaleta={setEscaleta}
+          onOpenAdvancedControls={() => setIsAdvancedOpen(true)}
+        />
+        {/* TABLA */}
         <EscaletaTable
           bloques={bloquesConTiempos}
           actualizarBloque={actualizarBloque}
           eliminarBloque={eliminarBloque}
           agregarBloque={agregarBloque}
+          colorPrincipal={escaleta?.color_escaleta || "#F97316"}
         />
       </div>
+      {/* SIDEBAR DE CONTROLES AVANZADOS */}
+      <ControlesAvanzadosSidebar
+        isOpen={isAdvancedOpen}
+        onClose={() => setIsAdvancedOpen(false)}
+        avanzados={escaleta}
+        setAvanzados={setEscaleta}
+        onGuardar={guardarCambios}
+        guardando={guardando}
+      />
     </div>
   );
 }

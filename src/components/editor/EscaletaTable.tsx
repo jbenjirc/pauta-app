@@ -7,6 +7,7 @@ type EscaletaTableProps = {
   actualizarBloque: (id: string, campo: keyof Bloque, valor: any) => void;
   eliminarBloque: (id: string) => void;
   agregarBloque: () => void;
+  colorPrincipal?: string;
 };
 
 export default function EscaletaTable({
@@ -14,12 +15,16 @@ export default function EscaletaTable({
   actualizarBloque,
   eliminarBloque,
   agregarBloque,
+  colorPrincipal,
 }: EscaletaTableProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="bg-orange-400 text-white text-sm">
+          <tr
+            className="text-white text-sm"
+            style={{ backgroundColor: colorPrincipal || "#F97316" }}
+          >
             <th className="p-3 font-semibold w-12 text-center">No.</th>
             <th className="p-3 font-semibold w-20">Inicio</th>
             <th className="p-3 font-semibold w-20">Fin</th>

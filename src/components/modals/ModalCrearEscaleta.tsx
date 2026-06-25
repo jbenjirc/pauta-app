@@ -44,7 +44,7 @@ export default function ModalCrearEscaleta({
             <input
               type="text"
               required
-              placeholder="Ej. Culto Dominical"
+              placeholder="Ej. Escuela sabática"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
               value={formData.titulo}
               onChange={(e) =>
