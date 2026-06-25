@@ -90,7 +90,12 @@ export default function EscaletaPDF({ escaleta, bloques }: EscaletaPDFProps) {
         </View>
 
         <View style={styles.table}>
-          <View style={styles.tableRowHeader}>
+          <View
+            style={[
+              styles.tableRowHeader,
+              { backgroundColor: escaleta?.color_escaleta || "#f97316" },
+            ]}
+          >
             <Text
               style={[
                 styles.tableCellHeader,
