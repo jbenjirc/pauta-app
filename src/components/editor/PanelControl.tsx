@@ -3,17 +3,19 @@ import { Building, Clock, Calendar, Palette } from "lucide-react";
 type PanelGeneralProps = {
   escaleta: any;
   setEscaleta: (escaleta: any) => void;
+  onOpenAdvancedControls?: () => void;
 };
 
 export default function PanelControl({
   escaleta,
   setEscaleta,
+  onOpenAdvancedControls,
 }: PanelGeneralProps) {
   // Evitamos renderizar si la escaleta aún no carga
   if (!escaleta) return null;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <div className="bg-red-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -87,6 +89,12 @@ export default function PanelControl({
           </div>
         </div>
       </div>
+      <span
+        className="text-sm text-gray-400 mt-3 block hover:text-gray-600 transition-colors cursor-pointer"
+        onClick={onOpenAdvancedControls}
+      >
+        Controles avanzados
+      </span>
     </div>
   );
 }

@@ -24,6 +24,7 @@ import EscaletaTable from "@/components/editor/EscaletaTable";
 import EscaletaPDF from "@/components/editor/EscaletaPDF";
 import { Bloque } from "@/lib/types";
 import PanelControl from "@/components/editor/PanelControl";
+import ControlesAvanzadosSidebar from "@/components/editor/ControlesAvanzadosSidebar";
 
 export default function EditorPage() {
   const params = useParams();
@@ -37,6 +38,8 @@ export default function EditorPage() {
 
   const [escaleta, setEscaleta] = useState<any>(null);
   const [bloques, setBloques] = useState<any[]>([]);
+
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -248,7 +251,11 @@ export default function EditorPage() {
 
       <div className="max-w-7xl mx-auto px-6 mt-8">
         {/* CONTROL DE LA ESCALETA */}
-        <PanelControl escaleta={escaleta} setEscaleta={setEscaleta} />
+        <PanelControl
+          escaleta={escaleta}
+          setEscaleta={setEscaleta}
+          onOpenAdvancedControls={() => setIsAdvancedOpen(true)}
+        />
         {/* TABLA */}
         <EscaletaTable
           bloques={bloquesConTiempos}
@@ -258,6 +265,15 @@ export default function EditorPage() {
           colorPrincipal={escaleta?.color_escaleta || "#F97316"}
         />
       </div>
+      {/* SIDEBAR DE CONTROLES AVANZADOS */}
+      <ControlesAvanzadosSidebar
+        isOpen={isAdvancedOpen}
+        onClose={() => setIsAdvancedOpen(false)}
+        avanzados={escaleta}
+        setAvanzados={setEscaleta}
+        onGuardar={guardarCambios}
+        guardando={guardando}
+      />
     </div>
   );
 }
