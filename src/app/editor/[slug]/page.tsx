@@ -240,7 +240,7 @@ export default function EditorPage() {
               </label>
               <input
                 type="text"
-                placeholder="Ej. Central"
+                placeholder="Ej. Narvarte"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                 value={escaleta.nombre_iglesia || ""}
                 onChange={(e) =>
