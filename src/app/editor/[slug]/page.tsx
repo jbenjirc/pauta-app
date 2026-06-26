@@ -199,6 +199,7 @@ export default function EditorPage() {
           mostrar_col_responsable: escaleta.mostrar_col_responsable,
           mostrar_col_recursos: escaleta.mostrar_col_recursos,
           mostrar_col_comentarios: escaleta.mostrar_col_comentarios,
+          color_escaleta: escaleta.color_escaleta,
 
           ultima_edicion: new Date().toISOString(),
         })
