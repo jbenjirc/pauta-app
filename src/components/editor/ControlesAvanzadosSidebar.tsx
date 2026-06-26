@@ -8,6 +8,8 @@ import {
   Link as LinkIcon,
   MessageSquare,
   Loader2,
+  CloudUpload,
+  CloudCog,
 } from "lucide-react";
 
 type AdvancedSidebarProps = {
@@ -52,10 +54,9 @@ export default function ControlesAvanzadosSidebar({
 
   return (
     <>
-      {/* Fondo oscuro semitransparente (Overlay) */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/20 z-40 transition-opacity backdrop-blur-sm"
+          className="fixed inset-0 bg-black/20 z-40 transition-opacity duration-300"
           onClick={onClose}
         />
       )}
@@ -212,7 +213,7 @@ export default function ControlesAvanzadosSidebar({
             {guardando ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <Save className="w-5 h-5" />
+              <CloudCog className="w-5 h-5" />
             )}
             {guardando ? "Guardando..." : "Guardar configuración"}
           </button>

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+// import { useAutoSave } from "@/lib/useAutoSave";
 
 // Componentes importados
 import { calcularTiemposEscaleta } from "@/lib/timeEngine";
@@ -35,6 +36,13 @@ export default function EditorPage() {
   const [bloques, setBloques] = useState<any[]>([]);
 
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+
+  // useAutoSave({
+  //   supabase,
+  //   escaleta,
+  //   bloques,
+  //   setEscaleta,
+  //  intervaloMs: 300000, // 5 minutos});
 
   useEffect(() => {
     setIsMounted(true);
@@ -117,7 +125,7 @@ export default function EditorPage() {
     );
   };
 
-  const guardarCambios = async () => {
+  const guardarCambios = async (redirigir = false) => {
     setGuardando(true);
     try {
       // 1. Guardar la información general de la escaleta (Cabecera) y capturar su error
@@ -161,15 +169,19 @@ export default function EditorPage() {
         if (errorBloques) throw errorBloques;
       }
 
-      alert("¡Cambios guardados con éxito!");
-      cargarDatos();
+      if (redirigir) {
+        router.push("/dashboard");
+      } else {
+        alert("¡Cambios guardados con éxito!");
+        cargarDatos();
+        setGuardando(false);
+      }
     } catch (error: any) {
       // Este bloque ahora sí se va a activar y te dirá la verdad en la consola
       console.error("❌ Error real detectado en Supabase:", error);
       alert(
         `Hubo un error al guardar: ${error.message || "Revisa la consola para más detalles."}`,
       );
-    } finally {
       setGuardando(false);
     }
   };
@@ -245,13 +257,20 @@ export default function EditorPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40 px-6 py-4 flex justify-between items-center shadow-sm">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors"
+        <button
+          onClick={() => guardarCambios(true)}
+          disabled={guardando}
+          className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors disabled:opacity-50"
         >
-          <ArrowLeft className="w-5 h-5" />{" "}
-          <span className="font-medium hidden sm:inline">Volver</span>
-        </Link>
+          {guardando ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <ArrowLeft className="w-5 h-5" />
+          )}
+          <span className="font-medium hidden sm:inline">
+            {guardando ? "Saliendo..." : "Volver"}
+          </span>
+        </button>
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
@@ -286,7 +305,7 @@ export default function EditorPage() {
           )}
 
           <button
-            onClick={guardarCambios}
+            onClick={() => guardarCambios()}
             disabled={guardando}
             className="flex items-center gap-2 bg-gray-900 hover:bg-black text-white px-6 py-2.5 rounded-lg font-medium disabled:opacity-50"
           >
