@@ -5,12 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import {
   ArrowLeft,
-  Save,
   Loader2,
-  Clock,
-  Calendar,
-  Palette,
-  Building,
   FileDown,
   CloudUpload,
   CloudSync,
@@ -65,7 +60,6 @@ export default function EditorPage() {
 
       if (bloquesError) throw bloquesError;
 
-      // Traducimos columnas BD -> Variables de tu Componente
       const bloquesMapeados = (bloquesData || []).map((b) => ({
         id: b.id,
         escaleta_id: b.escaleta_id,
@@ -73,7 +67,10 @@ export default function EditorPage() {
         duracion: b.duracion_minutos || 0,
         actividad: b.actividad || "",
         participante: b.participante || "",
-        recursos: b.descripcion_indicaciones || "", // Mapeo a "recursos"
+        responsable_tecnico: b.responsable_tecnico || "",
+        recursos_drive_url: b.recursos_drive_url || "",
+        descripcion_indicaciones: b.descripcion_indicaciones || "",
+        comentarios_cabina: b.comentarios_cabina || "",
         es_nuevo: false,
       }));
       setBloques(bloquesMapeados);
@@ -94,7 +91,7 @@ export default function EditorPage() {
         duracion: 5,
         actividad: "",
         participante: "",
-        recursos: "",
+        descripcion_indicaciones: "",
         es_nuevo: true,
       },
     ]);
@@ -123,19 +120,24 @@ export default function EditorPage() {
   const guardarCambios = async () => {
     setGuardando(true);
     try {
-      await supabase
+      // 1. Guardar la información general de la escaleta (Cabecera) y capturar su error
+      const { error: errorCabecera } = await supabase
         .from("escaletas")
         .update({
           titulo_programa: escaleta.titulo_programa,
           nombre_iglesia: escaleta.nombre_iglesia,
           fecha_programa: escaleta.fecha_programa,
-          color_escaleta: escaleta.color_escaleta,
           hora_inicio_programa: escaleta.hora_inicio_programa,
+          color_escaleta: escaleta.color_escaleta,
+
           ultima_edicion: new Date().toISOString(),
         })
         .eq("id", escaleta.id);
 
-      // Traducimos Variables de tu Componente -> Columnas BD
+      // Si la base de datos rechazó la cabecera, detenemos todo aquí
+      if (errorCabecera) throw errorCabecera;
+
+      // 2. Traducimos Variables de tu Componente -> Columnas BD
       const bloquesParaBD = bloques.map((b) => ({
         id: b.id,
         escaleta_id: b.escaleta_id,
@@ -143,17 +145,66 @@ export default function EditorPage() {
         duracion_minutos: b.duracion,
         actividad: b.actividad,
         participante: b.participante,
-        descripcion_indicaciones: b.recursos, // Guardamos como "descripcion_indicaciones"
+        responsable_tecnico: b.responsable_tecnico,
+        recursos_drive_url: b.recursos_drive_url,
+        descripcion_indicaciones: b.recursos,
+        comentarios_cabina: b.comentarios_cabina,
       }));
 
       if (bloquesParaBD.length > 0) {
-        await supabase.from("bloques").upsert(bloquesParaBD);
+        // Capturamos el error del upsert de los bloques
+        const { error: errorBloques } = await supabase
+          .from("bloques")
+          .upsert(bloquesParaBD);
+
+        // Si falló el guardado de las filas, detenemos todo aquí
+        if (errorBloques) throw errorBloques;
       }
 
       alert("¡Cambios guardados con éxito!");
       cargarDatos();
-    } catch (error) {
-      alert("Hubo un error al guardar los cambios.");
+    } catch (error: any) {
+      // Este bloque ahora sí se va a activar y te dirá la verdad en la consola
+      console.error("❌ Error real detectado en Supabase:", error);
+      alert(
+        `Hubo un error al guardar: ${error.message || "Revisa la consola para más detalles."}`,
+      );
+    } finally {
+      setGuardando(false);
+    }
+  };
+
+  const guardarAvanzados = async () => {
+    setGuardando(true);
+    try {
+      // 1. Guardar solo la información de ajustes (Cabecera)
+      const { error: errorCabecera } = await supabase
+        .from("escaletas")
+        .update({
+          // Campos del panel avanzado
+          hora_inicio_stream: escaleta.hora_inicio_stream,
+          floor_manager: escaleta.floor_manager,
+          director_tecnico: escaleta.director_tecnico,
+          mostrar_col_responsable: escaleta.mostrar_col_responsable,
+          mostrar_col_recursos: escaleta.mostrar_col_recursos,
+          mostrar_col_comentarios: escaleta.mostrar_col_comentarios,
+
+          ultima_edicion: new Date().toISOString(),
+        })
+        .eq("id", escaleta.id);
+
+      if (errorCabecera) throw errorCabecera;
+
+      alert("¡Configuración avanzada guardada con éxito!");
+      cargarDatos();
+    } catch (error: any) {
+      console.error(
+        "❌ Error real detectado en Supabase (Ajustes Avanzados):",
+        error,
+      );
+      alert(
+        `Hubo un error al guardar los ajustes avanzados: ${error.message || "Revisa la consola."}`,
+      );
     } finally {
       setGuardando(false);
     }
@@ -249,7 +300,7 @@ export default function EditorPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-8">
+      <div className="max-w-10xl mx-auto px-6 mt-8">
         {/* CONTROL DE LA ESCALETA */}
         <PanelControl
           escaleta={escaleta}
@@ -259,10 +310,14 @@ export default function EditorPage() {
         {/* TABLA */}
         <EscaletaTable
           bloques={bloquesConTiempos}
+          colorPrincipal={escaleta?.color_escaleta}
+          // Pasamos los booleanos de configuración en vivo
+          mostrarResponsable={escaleta?.mostrar_col_responsable}
+          mostrarRecursos={escaleta?.mostrar_col_recursos}
+          mostrarComentarios={escaleta?.mostrar_col_comentarios}
           actualizarBloque={actualizarBloque}
           eliminarBloque={eliminarBloque}
           agregarBloque={agregarBloque}
-          colorPrincipal={escaleta?.color_escaleta || "#F97316"}
         />
       </div>
       {/* SIDEBAR DE CONTROLES AVANZADOS */}
@@ -271,7 +326,7 @@ export default function EditorPage() {
         onClose={() => setIsAdvancedOpen(false)}
         avanzados={escaleta}
         setAvanzados={setEscaleta}
-        onGuardar={guardarCambios}
+        onGuardarAvanzados={guardarAvanzados}
         guardando={guardando}
       />
     </div>

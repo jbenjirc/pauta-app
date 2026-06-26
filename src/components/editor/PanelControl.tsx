@@ -15,7 +15,7 @@ export default function PanelControl({
   if (!escaleta) return null;
 
   return (
-    <div className="bg-red-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <div className="bg-gray-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -93,7 +93,7 @@ export default function PanelControl({
         className="text-sm text-gray-400 mt-3 block hover:text-gray-600 transition-colors cursor-pointer"
         onClick={onOpenAdvancedControls}
       >
-        Controles avanzados
+        Configuración avanzada
       </span>
     </div>
   );

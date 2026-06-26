@@ -15,7 +15,7 @@ type AdvancedSidebarProps = {
   onClose: () => void;
   avanzados: any;
   setAvanzados: (datos: any) => void;
-  onGuardar: () => void;
+  onGuardarAvanzados: () => void;
   guardando: boolean;
 };
 
@@ -24,7 +24,7 @@ export default function ControlesAvanzadosSidebar({
   onClose,
   avanzados,
   setAvanzados,
-  onGuardar,
+  onGuardarAvanzados,
   guardando,
 }: AdvancedSidebarProps) {
   // Componente interno para el Toggle Switch
@@ -94,9 +94,12 @@ export default function ControlesAvanzadosSidebar({
             <input
               type="time"
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none"
-              value={avanzados?.inicio_stream || ""}
+              value={avanzados?.hora_inicio_stream || ""}
               onChange={(e) =>
-                setAvanzados({ ...avanzados, inicio_stream: e.target.value })
+                setAvanzados({
+                  ...avanzados,
+                  hora_inicio_stream: e.target.value,
+                })
               }
             />
           </div>
@@ -153,9 +156,9 @@ export default function ControlesAvanzadosSidebar({
               </span>
             </div>
             <ToggleSwitch
-              checked={!!avanzados?.mostrar_responsable}
+              checked={!!avanzados?.mostrar_col_responsable}
               onChange={(val) =>
-                setAvanzados({ ...avanzados, mostrar_responsable: val })
+                setAvanzados({ ...avanzados, mostrar_col_responsable: val })
               }
             />
           </div>
@@ -172,9 +175,9 @@ export default function ControlesAvanzadosSidebar({
               </span>
             </div>
             <ToggleSwitch
-              checked={!!avanzados?.mostrar_recursos}
+              checked={!!avanzados?.mostrar_col_recursos}
               onChange={(val) =>
-                setAvanzados({ ...avanzados, mostrar_recursos: val })
+                setAvanzados({ ...avanzados, mostrar_col_recursos: val })
               }
             />
           </div>
@@ -191,9 +194,9 @@ export default function ControlesAvanzadosSidebar({
               </span>
             </div>
             <ToggleSwitch
-              checked={!!avanzados?.mostrar_comentarios}
+              checked={!!avanzados?.mostrar_col_comentarios}
               onChange={(val) =>
-                setAvanzados({ ...avanzados, mostrar_comentarios: val })
+                setAvanzados({ ...avanzados, mostrar_col_comentarios: val })
               }
             />
           </div>
@@ -202,7 +205,7 @@ export default function ControlesAvanzadosSidebar({
         {/* Botón de Guardado */}
         <div className="p-5 border-t border-gray-100 bg-white shrink-0">
           <button
-            onClick={onGuardar}
+            onClick={onGuardarAvanzados}
             disabled={guardando}
             className="w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-black text-white px-6 py-3 rounded-xl font-medium transition-colors disabled:opacity-50 shadow-sm"
           >
