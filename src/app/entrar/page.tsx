@@ -103,8 +103,8 @@ export default function LoginPage() {
           </Link>
           <div>
             <p>
-              Esta es una versión de prueba, usa test@pauta.com y test123 para
-              probar :)
+              Esta es una versión de prueba, usa test@pauta.com y pauta123 para
+              probar todas las funcionalidades :)
             </p>
           </div>
         </div>
