@@ -24,7 +24,7 @@ export default function EscaletaTable({
   mostrarComentarios,
 }: EscaletaTableProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-colors dark:bg-gray-800 dark:border-gray-700">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr
@@ -55,19 +55,19 @@ export default function EscaletaTable({
           {bloques.map((bloque: any, index) => (
             <tr
               key={bloque.id}
-              className="border-b border-gray-100 hover:bg-gray-50 transition-colors group"
+              className="border-b border-gray-100 hover:bg-gray-50 transition-colors group dark:border-gray-700 dark:hover:bg-gray-700"
             >
               <td className="p-3 text-center text-sm font-medium text-gray-400">
                 {index + 1}
               </td>
-              <td className="p-3 text-sm font-mono font-medium text-gray-600 bg-gray-50/50">
+              <td className="p-3 text-sm font-mono font-medium text-gray-400">
                 {bloque.horaInicioFormat}
               </td>
-              <td className="p-3 text-sm font-mono font-medium text-gray-600 bg-gray-50/50">
+              <td className="p-3 text-sm font-mono font-medium text-gray-400">
                 {bloque.horaFinFormat}
               </td>
 
-              <td className="p-3">
+              <td className="p-3 text-sm font-mono font-medium text-gray-400">
                 <input
                   type="number"
                   value={bloque.duracion || ""}
@@ -135,7 +135,7 @@ export default function EscaletaTable({
                       actualizarBloque(bloque.id, "url", e.target.value)
                     }
                     placeholder="https://link-recurso.com"
-                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all font-mono text-xs text-blue-600"
+                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all font-mono text-xs text-blue-600 dark:text-blue-400"
                   />
                 </td>
               )}
@@ -153,7 +153,7 @@ export default function EscaletaTable({
                       )
                     }
                     placeholder="Notas para producción..."
-                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all text-gray-600"
+                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
                   />
                 </td>
               )}
@@ -166,7 +166,7 @@ export default function EscaletaTable({
                   }
                   placeholder="Micrófonos, himnos, etc."
                   rows={1}
-                  className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none resize-none transition-all"
+                  className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
                 />
               </td>
 
@@ -183,10 +183,10 @@ export default function EscaletaTable({
         </tbody>
       </table>
 
-      <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-center">
+      <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-center dark:bg-gray-700 dark:border-gray-600">
         <button
           onClick={agregarBloque}
-          className="flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700 bg-orange-100 hover:bg-orange-200 px-4 py-2 rounded-lg transition-colors"
+          className="flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700 bg-orange-100 hover:bg-orange-200 px-4 py-2 rounded-lg transition-colors dark:bg-gray-600 dark:text-gray-300 dark:hover:text-blue-100 dark:hover:bg-gray-500"
         >
           <Plus className="w-4 h-4" /> Agregar Bloque
         </button>

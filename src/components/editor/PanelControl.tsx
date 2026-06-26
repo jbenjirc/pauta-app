@@ -15,10 +15,10 @@ export default function PanelControl({
   if (!escaleta) return null;
 
   return (
-    <div className="bg-gray-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <div className="bg-gray-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8 transition-colors dark:bg-gray-800 dark:border-gray-700">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300 flex items-center gap-1">
             Título del Programa
           </label>
           <input
@@ -31,7 +31,7 @@ export default function PanelControl({
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
             <Building className="w-4 h-4" /> Iglesia
           </label>
           <input
@@ -46,7 +46,7 @@ export default function PanelControl({
         </div>
         <div className="flex gap-4">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
               <Clock className="w-4 h-4" /> Inicio
             </label>
             <input
@@ -62,7 +62,7 @@ export default function PanelControl({
             />
           </div>
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
               <Calendar className="w-4 h-4" /> Fecha
             </label>
             <input
@@ -75,7 +75,7 @@ export default function PanelControl({
             />
           </div>
           <div className="w-16">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
               <Palette className="w-4 h-4" />
             </label>
             <input
@@ -90,7 +90,7 @@ export default function PanelControl({
         </div>
       </div>
       <span
-        className="text-sm text-gray-400 mt-3 block hover:text-gray-600 transition-colors cursor-pointer"
+        className="text-sm text-gray-400 mt-3 block hover:text-gray-600 transition-colors cursor-pointer dark:hover:text-gray-300"
         onClick={onOpenAdvancedControls}
       >
         Configuración avanzada

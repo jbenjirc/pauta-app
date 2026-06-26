@@ -189,11 +189,10 @@ export default function EditorPage() {
   const guardarAvanzados = async () => {
     setGuardando(true);
     try {
-      // 1. Guardar solo la información de ajustes (Cabecera)
+      // 1. Guardar la configuración de ajustes avanzados
       const { error: errorCabecera } = await supabase
         .from("escaletas")
         .update({
-          // Campos del panel avanzado
           hora_inicio_stream: escaleta.hora_inicio_stream,
           floor_manager: escaleta.floor_manager,
           director_tecnico: escaleta.director_tecnico,
@@ -207,7 +206,31 @@ export default function EditorPage() {
 
       if (errorCabecera) throw errorCabecera;
 
-      alert("¡Configuración avanzada guardada con éxito!");
+      // 2. NUEVO: Guardar también los bloques actuales para evitar que se pierdan
+      const bloquesParaBD = bloques.map((b) => ({
+        id: b.id,
+        escaleta_id: b.escaleta_id,
+        orden: b.orden,
+        duracion_minutos: b.duracion,
+        actividad: b.actividad,
+        participante: b.participante,
+        responsable_tecnico: b.responsable_tecnico,
+        recursos_drive_url: b.recursos_drive_url,
+        descripcion_indicaciones: b.recursos,
+        comentarios_cabina: b.comentarios_cabina,
+      }));
+
+      if (bloquesParaBD.length > 0) {
+        const { error: errorBloques } = await supabase
+          .from("bloques")
+          .upsert(bloquesParaBD);
+
+        if (errorBloques) throw errorBloques;
+      }
+
+      alert("¡Configuración avanzada y bloques guardados con éxito!");
+
+      // Ahora es completamente seguro recargar los datos porque los bloques ya están en Supabase
       cargarDatos();
     } catch (error: any) {
       console.error(
@@ -255,7 +278,7 @@ export default function EditorPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 pb-20 dark:bg-gray-900 transition-colors">
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40 px-6 py-4 flex justify-between items-center shadow-sm">
         <button
           onClick={() => guardarCambios(true)}
@@ -330,7 +353,6 @@ export default function EditorPage() {
         <EscaletaTable
           bloques={bloquesConTiempos}
           colorPrincipal={escaleta?.color_escaleta}
-          // Pasamos los booleanos de configuración en vivo
           mostrarResponsable={escaleta?.mostrar_col_responsable}
           mostrarRecursos={escaleta?.mostrar_col_recursos}
           mostrarComentarios={escaleta?.mostrar_col_comentarios}
