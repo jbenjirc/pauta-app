@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { UserPlus } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "@/contextos/LanguageContext";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,8 @@ export default function RegisterPage() {
 
   const router = useRouter();
   const supabase = createClient();
+
+  const { t } = useTranslation();
 
   const manejarRegistro = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,17 +40,17 @@ export default function RegisterPage() {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Crear una cuenta
+            {t("registro.registroForm.title")}
           </h1>
           <p className="text-gray-500 text-sm">
-            Comienza a organizar tus escaletas en Pauta App
+            {t("registro.registroForm.description")}
           </p>
         </div>
 
         <form onSubmit={manejarRegistro} className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Correo Electrónico
+              {t("registro.registroForm.mail-title")}
             </label>
             <input
               type="email"
@@ -55,12 +58,13 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+              placeholder={t("registro.registroForm.mail-placeholder")}
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Contraseña
+              {t("registro.registroForm.password-title")}
             </label>
             <input
               type="password"
@@ -68,7 +72,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
-              placeholder="Mínimo 6 caracteres"
+              placeholder={t("registro.registroForm.password-placeholder")}
             />
           </div>
 
@@ -87,19 +91,25 @@ export default function RegisterPage() {
               "Creando..."
             ) : (
               <>
-                <UserPlus className="w-4 h-4" /> Registrarse
+                <UserPlus className="w-4 h-4" />{" "}
+                {t("registro.registroForm.submit-button")}
               </>
             )}
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <Link
-            href="/entrar"
-            className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
-          >
-            ¿Ya tienes cuenta? Inicia sesión
-          </Link>
+          <div className="text-sm text-gray-500">
+            {t("registro.registroForm.login-text")}{" "}
+            <Link
+              href="/entrar"
+              className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              <span className="font-semibold">
+                {t("registro.registroForm.login-link")}
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

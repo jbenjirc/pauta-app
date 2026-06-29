@@ -1,10 +1,28 @@
 {
   "navbar": {
     "login": "Inicia Sesión",
-    "register": "Regístrate"
+    "register": "Regístrate",
+    "MODAL-lenguaje": "Idioma"
   },
-  "home": {
-    "title": "Bienvenido al Editor",
-    "subtitle": "Crea tus escaletas de forma profesional."
+  "index": {
+    "mainLandingPage": {
+      "title-fragment1": "El control total de tus tiempos,",
+      "title-fragment2": "en vivo.",
+      "description": "Crea, edita y exporta a PDF tus escaletas multimedia. Una herramienta diseñada para evitar fricciones en cabina y asegurar que cada momento ocurra en el segundo exacto.",
+      "action-button": "Comienza ahora"
+    }
+  },
+  "registro": {
+    "registroForm": {
+      "title": "Crea tu cuenta",
+      "description": "Comienza a organizar tus escaletas en Pauta App",
+      "mail-title": "Correo electrónico",
+      "mail-placeholder": "correo@pauta.app",
+      "password-title": "Contraseña",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Registrarse",
+      "login-text": "¿Ya tienes una cuenta?",
+      "login-link": "Inicia sesión"
+    }
   }
 }
