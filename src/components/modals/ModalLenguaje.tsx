@@ -2,34 +2,18 @@
 
 import { useEffect } from "react";
 import { X, Check } from "lucide-react";
+import { useTranslation } from "@/contextos/LanguageContext";
 
-// 1. Aquí le definimos a TypeScript las reglas del juego (Los Tipos)
-interface ModalLenguajeProps {
-  isOpen: boolean; // isOpen siempre será un booleano (true/false)
-  onClose: () => void; // onClose es una función que no devuelve nada (void)
-  currentLang?: string; // El signo '?' significa que es opcional, porque ya tiene "ES" por defecto
-}
-
-// 1. Agregamos la nueva función a las reglas
 interface ModalLenguajeProps {
   isOpen: boolean;
   onClose: () => void;
-  currentLang?: string;
-  // NUEVO: Esta función recibe un texto (string) que será el código del idioma
-  onLanguageSelect: (langCode: string) => void;
 }
 
-// 2. Le decimos a la función que respete esas reglas añadiendo ": ModalLenguajeProps"
-export default function ModalLenguaje({
-  isOpen,
-  onClose,
-  currentLang = "ES",
-  onLanguageSelect,
-}: ModalLenguajeProps) {
-  // Cerrar modal con la tecla Escape
+export default function ModalLenguaje({ isOpen, onClose }: ModalLenguajeProps) {
+  const { currentLang, changeLanguage } = useTranslation();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // <-- También tipamos el evento aquí
       if (e.key === "Escape") onClose();
     };
     if (isOpen) window.addEventListener("keydown", handleKeyDown);
@@ -68,9 +52,9 @@ export default function ModalLenguaje({
             <button
               key={lang.code}
               onClick={() => {
-                onLanguageSelect(lang.code); // Llamamos a la función pasada desde el Navbar
+                changeLanguage(lang.code);
                 onClose();
-                console.log("Cambiar a:", lang.code);
+                console.log("Nuevo idioma:", lang.code);
               }}
               className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors ${
                 currentLang === lang.code

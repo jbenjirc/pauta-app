@@ -1,0 +1,10 @@
+{
+  "navbar": {
+    "login": "Log In",
+    "register": "Sign Up"
+  },
+  "home": {
+    "title": "Welcome to the Editor",
+    "subtitle": "Create your rundowns professionally."
+  }
+}

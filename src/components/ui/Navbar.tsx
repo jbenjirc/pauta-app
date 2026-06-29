@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe, Moon, Sun } from "lucide-react";
 import LenguajeModal from "@/components/modals/ModalLenguaje";
+import { useTranslation } from "@/contextos/LanguageContext";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,6 +14,8 @@ export default function Navbar() {
   const [isDark, setIsDark] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState("ES");
+
+  const { t } = useTranslation();
 
   // Sincronizamos el estado local con la clase 'dark' del HTML
   useEffect(() => {
@@ -70,30 +73,20 @@ export default function Navbar() {
             href="/entrar"
             className="text-sm font-medium text-text-main hover:text-primary transition-colors"
           >
-            Iniciar Sesión
+            {t("navbar.login")}
           </Link>
 
           <Link
             href="/registro"
             className="text-sm font-medium bg-primary text-primary-text hover:opacity-90 px-4 py-2 rounded-lg transition-all shadow-sm"
           >
-            Registrarse
+            {t("navbar.register")}
           </Link>
         </div>
       </header>
 
       {/* Instancia de la Modal fuera del header para evitar problemas de overflow */}
-      <LenguajeModal
-        isOpen={isLangOpen}
-        onClose={() => setIsLangOpen(false)}
-        currentLang={currentLang} // Le pasamos el idioma actual para la palomita
-        // ¡AQUÍ LO LEEMOS!
-        // Cuando la modal nos manda el 'codigo', actualizamos el estado de nuestro Navbar
-        onLanguageSelect={(codigo) => {
-          setCurrentLang(codigo);
-          console.log("El Navbar se enteró de que cambiaste a:", codigo);
-        }}
-      />
+      <LenguajeModal isOpen={isLangOpen} onClose={() => setIsLangOpen(false)} />
     </>
   );
 }

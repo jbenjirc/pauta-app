@@ -1,0 +1,10 @@
+{
+  "navbar": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse"
+  },
+  "home": {
+    "title": "Bienvenido al Editor",
+    "subtitle": "Crea tus escaletas de forma profesional."
+  }
+}
