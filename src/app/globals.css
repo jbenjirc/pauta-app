@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 1. TU PALETA BASE (Los colores puros en Modo Claro) */
+  --punch-red: #e63946;
+  --honeydew: #f1faee;
+  --frosted-blue: #a8dadc;
+  --cerulean: #457b9d;
+  --oxford-navy: #1d3557;
+
+  /* =========================================
+     2. TOKENS SEMÁNTICOS (El secreto para no usar 'dark:') 
+     Aquí asignamos los colores puros a roles de la interfaz.
+     ========================================= */
+  --bg-app: var(--honeydew); /* Fondo de la app */
+  --bg-surface: #ffffff; /* Fondo de tarjetas, inputs o modales */
+  --text-main: var(--oxford-navy); /* Texto principal */
+  --text-muted: var(--cerulean); /* Texto secundario o iconos */
+  --border-line: var(--frosted-blue); /* Bordes de tablas */
+  --brand-primary: var(--cerulean); /* Botones principales */
+  --brand-text: var(--honeydew); /* Texto dentro de botones principales */
+  --danger: var(--punch-red); /* Alertas */
 }
 
+/* 3. MODO OSCURO INTERACTIVO */
+.dark {
+  /* Ajustamos los colores puros para que no lastimen la vista en oscuro */
+  --punch-red: #ef5b68;
+  --honeydew: #e0f2df;
+  --frosted-blue: #8bc8cb;
+  --cerulean: #6299bc;
+  --oxford-navy: #2a4c7a;
+
+  /* =========================================
+     4. REASIGNACIÓN DE TOKENS SEMÁNTICOS
+     Invertimos los roles para el modo oscuro.
+     ========================================= */
+  --bg-app: #0d1b2a; /* Fondo muy oscuro */
+  --bg-surface: var(--oxford-navy); /* Tarjetas ligeramente más claras */
+  --text-main: var(--honeydew); /* Texto claro */
+  --text-muted: var(--frosted-blue); /* Texto secundario claro */
+  --border-line: var(--cerulean); /* Bordes más visibles */
+  --brand-primary: var(--frosted-blue); /* Botón claro para contrastar */
+  --brand-text: #0d1b2a; /* Texto oscuro dentro del botón claro */
+  /* --danger: se queda apuntando a --punch-red, que ya se aclaró arriba */
+}
+
+/* 5. INTEGRACIÓN CON TAILWIND V4 */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: var(--bg-app);
+  --color-foreground: var(--text-main);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Registramos los tokens semánticos en Tailwind */
+  --color-surface: var(--bg-surface);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-border-line: var(--border-line);
+  --color-primary: var(--brand-primary);
+  --color-primary-text: var(--brand-text);
+  --color-danger: var(--danger);
+
+  /* Opcional: dejamos tu paleta pura por si necesitas un color estricto */
+  --color-cerulean: var(--cerulean);
+  --color-honeydew: var(--honeydew);
+  --color-oxford-navy: var(--oxford-navy);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
