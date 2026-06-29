@@ -3,7 +3,7 @@ import { Globe } from "lucide-react";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+    <div className="min-h-screen flex flex-col font-sans bg-app">
       {/* HERO SECTION */}
       <main className="flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 mt-16 md:mt-0">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4 max-w-3xl">
