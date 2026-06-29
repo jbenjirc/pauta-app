@@ -13,19 +13,39 @@ export default function Navbar() {
   // Estados
   const [isDark, setIsDark] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("ES");
 
-  const { t } = useTranslation();
+  const { t, currentLang } = useTranslation();
 
-  // Sincronizamos el estado local con la clase 'dark' del HTML
+  // 1. Al cargar la app, leemos la memoria y aplicamos el tema de inmediato
   useEffect(() => {
+    const temaGuardado = localStorage.getItem("tema-pauta");
+    const esOscuro = temaGuardado === "dark";
+
+    setIsDark(esOscuro); // Actualizamos el ícono del sol/luna
+
+    // Aplicamos la clase al HTML para que pinte los colores
     const html = document.documentElement;
-    if (isDark) {
+    if (esOscuro) {
       html.classList.add("dark");
     } else {
       html.classList.remove("dark");
     }
-  }, [isDark]);
+  }, []);
+
+  // 2. Creamos una función que controle todo cuando haces clic
+  const toggleTheme = () => {
+    const nuevoEstado = !isDark;
+    setIsDark(nuevoEstado);
+
+    const html = document.documentElement;
+    if (nuevoEstado) {
+      html.classList.add("dark");
+      localStorage.setItem("tema-pauta", "dark"); // Guardamos en el disco duro
+    } else {
+      html.classList.remove("dark");
+      localStorage.setItem("tema-pauta", "light"); // Guardamos en el disco duro
+    }
+  };
 
   // Se oculta si estamos en el editor o en el dashboard
   if (pathname?.startsWith("/editor") || pathname?.startsWith("/dashboard")) {
@@ -47,7 +67,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {/* Botón de Modo Oscuro */}
           <button
-            onClick={() => setIsDark(!isDark)}
+            onClick={toggleTheme}
             className="flex items-center justify-center w-8 h-8 rounded-md text-text-muted hover:text-text-main hover:bg-surface transition-colors"
             aria-label="Alternar tema"
           >

@@ -82,7 +82,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Opcional: Evitar que la página parpadee sin textos durante el milisegundo de carga
-  if (!isReady) {
+  if (!isReady && Object.keys(dictionary).length === 0) {
     return null; // O podrías poner un <div className="spinner">Cargando...</div>
   }
 
