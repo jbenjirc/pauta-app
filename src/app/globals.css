@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* =========================================
+     1. PALETA BASE (Modo Claro)
+     ========================================= */
+  --punch-red: #e63946;
+  --honeydew: #f1faee;
+  --frosted-blue: #a8dadc;
+  --cerulean: #457b9d;
+  --oxford-navy: #1d3557;
+
+  /* =========================================
+     2. TOKENS SEMÁNTICOS (Variables de UI)
+     ========================================= */
+  --bg-app: var(--honeydew);
+  --bg-surface: #ffffff;
+  --text-main: var(--oxford-navy);
+  --text-muted: var(--cerulean);
+  --border-line: var(--frosted-blue);
+  --brand-primary: var(--cerulean);
+  --brand-text: var(--honeydew);
+  --danger: var(--punch-red);
 }
 
+/* =========================================
+   3. MODO OSCURO INTERACTIVO
+   ========================================= */
+.dark {
+  /* Ajuste de brillo para colores base en oscuro */
+  --punch-red: #ef5b68;
+  --honeydew: #e0f2df;
+  --frosted-blue: #8bc8cb;
+  --cerulean: #6299bc;
+  --oxford-navy: #2a4c7a;
+
+  /* Reasignación de roles semánticos */
+  --bg-app: #0d1b2a;
+  --bg-surface: var(--oxford-navy);
+  --text-main: var(--honeydew);
+  --text-muted: var(--frosted-blue);
+  --border-line: var(--cerulean);
+  --brand-primary: var(--frosted-blue);
+  --brand-text: #0d1b2a;
+}
+
+/* =========================================
+   4. INTEGRACIÓN CON TAILWIND V4
+   ========================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Mapeo de aplicación global */
+  --color-background: var(--bg-app);
+  --color-foreground: var(--text-main);
+
+  /* Mapeo de tokens semánticos */
+  --color-surface: var(--bg-surface);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-border-line: var(--border-line);
+  --color-primary: var(--brand-primary);
+  --color-primary-text: var(--brand-text);
+  --color-danger: var(--danger);
+
+  /* Mapeo de colores puros (Requeridos por la página de pruebas) */
+  --color-punch-red: var(--punch-red);
+  --color-honeydew: var(--honeydew);
+  --color-frosted-blue: var(--frosted-blue);
+  --color-cerulean: var(--cerulean);
+  --color-oxford-navy: var(--oxford-navy);
+
+  /* Escalas estáticas (Requeridas por los fondos suaves de la página de pruebas) */
+  --color-punch-red-100: #fcebeb;
+  --color-punch-red-900: #5c171c;
+  --color-honeydew-100: #ffffff;
+  --color-honeydew-900: #3f4d3d;
+  --color-frosted-blue-100: #eef7f8;
+  --color-frosted-blue-900: #223f42;
+  --color-cerulean-100: #eaf1f5;
+  --color-cerulean-900: #1b3445;
+  --color-oxford-navy-100: #e3e8ee;
+  --color-oxford-navy-900: #0a131f;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* =========================================
+   5. ESTILOS BASE
+   ========================================= */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
