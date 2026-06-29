@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "@/contextos/LanguageContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function LoginPage() {
 
   const router = useRouter();
   const supabase = createClient();
+  const { t } = useTranslation();
 
   const manejarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,46 +37,48 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center p-4 font-sans">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4 font-sans transition-colors duration-300">
+      <div className="max-w-md w-full bg-surface rounded-2xl shadow-sm border border-border-line p-8 transition-colors duration-300">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Bienvenido de vuelta
+          <h1 className="text-2xl font-bold text-text-main mb-2">
+            {t("entrar.entrarForm.title")}
           </h1>
-          <p className="text-gray-500 text-sm">
-            Ingresa a tu cuenta de Pauta App
+          <p className="text-text-muted text-sm">
+            {t("entrar.entrarForm.description")}
           </p>
         </div>
 
         <form onSubmit={manejarLogin} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Correo Electrónico
+            <label className="block text-sm font-medium text-text-main mb-1">
+              {t("entrar.entrarForm.mail-title")}
             </label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+              className="w-full px-4 py-2 bg-background border border-border-line text-text-main placeholder:text-text-muted rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+              placeholder={t("entrar.entrarForm.mail-placeholder")}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Contraseña
+            <label className="block text-sm font-medium text-text-main mb-1">
+              {t("entrar.entrarForm.password-title")}
             </label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+              className="w-full px-4 py-2 bg-background border border-border-line text-text-main placeholder:text-text-muted rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+              placeholder={t("entrar.entrarForm.password-placeholder")}
             />
           </div>
 
           {errorMsj && (
-            <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg border border-red-100">
+            <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm p-3 rounded-lg border border-red-100 dark:border-red-800 transition-colors">
               {errorMsj}
             </div>
           )}
@@ -82,30 +86,28 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center items-center gap-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold py-2.5 rounded-lg transition-colors shadow-sm"
+            className="w-full flex justify-center items-center gap-2 bg-primary hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-text font-semibold py-2.5 rounded-lg transition-all shadow-sm"
           >
             {loading ? (
               "Iniciando..."
             ) : (
               <>
-                <LogIn className="w-4 h-4" /> Entrar
+                <LogIn className="w-4 h-4" />{" "}
+                {t("entrar.entrarForm.submit-button")}
               </>
             )}
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <Link
-            href="/registro"
-            className="text-sm text-gray-500 hover:text-orange-600 transition-colors"
-          >
-            ¿No tienes cuenta? Regístrate aquí
-          </Link>
-          <div>
-            <p>
-              Esta es una versión de prueba, usa test@pauta.com y pauta123 para
-              probar todas las funcionalidades :)
-            </p>
+          <div className="text-sm text-text-muted">
+            {t("entrar.entrarForm.register-text")}{" "}
+            <Link
+              href="/registro"
+              className="font-semibold text-text-main hover:text-primary transition-colors"
+            >
+              {t("entrar.entrarForm.register-link")}
+            </Link>
           </div>
         </div>
       </div>
