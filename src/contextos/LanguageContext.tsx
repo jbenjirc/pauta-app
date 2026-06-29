@@ -1,20 +1,20 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import es from "@/local/lenguajes/es.json";
-import en from "@/local/lenguajes/en.json";
+import lang_lib from "../local/lang-lib.json";
 
-// 1. Mapeamos los JSON a un objeto manejable
-const dictionaries: Record<string, any> = {
-  ES: es,
-  EN: en,
-};
+export interface AppLanguage {
+  code: string;
+  name: string;
+  flag: string;
+}
 
-// 2. Definimos las reglas (TypeScript)
 interface LanguageContextType {
   currentLang: string;
   changeLanguage: (lang: string) => void;
-  t: (key: string) => string; // La función mágica que traducirá los textos
+  t: (key: string) => string;
+  languages: AppLanguage[];
+  isReady: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
@@ -23,42 +23,78 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [currentLang, setCurrentLang] = useState("ES");
+  const [dictionary, setDictionary] = useState<Record<string, any>>({});
+  const [isReady, setIsReady] = useState(false);
 
-  // Al cargar la app, revisamos si el usuario ya tenía un idioma guardado
-  useEffect(() => {
-    const guardado = localStorage.getItem("idioma-pauta");
-    if (guardado && dictionaries[guardado]) {
-      setCurrentLang(guardado);
+  const loadDictionary = async (langCode: string) => {
+    setIsReady(false);
+
+    try {
+      const module = await import(
+        `../local/lenguajes/${langCode.toLowerCase()}.json`
+      );
+
+      setDictionary(module.default || module);
+      setCurrentLang(langCode);
+      localStorage.setItem("idioma-pauta", langCode);
+    } catch (error) {
+      console.error(
+        `Error: No se encontró el archivo de idioma para ${langCode}`,
+        error,
+      );
+      if (langCode !== "ES") loadDictionary("ES");
+    } finally {
+      setIsReady(true);
     }
-  }, []);
-
-  // Función para cambiar de idioma y guardar en memoria
-  const changeLanguage = (lang: string) => {
-    setCurrentLang(lang);
-    localStorage.setItem("idioma-pauta", lang);
   };
 
-  // Función "t" (translate): Busca la ruta del texto en el JSON
-  // Ejemplo de uso: t("navbar.login") -> Busca "navbar", luego "login"
-  const t = (path: string) => {
+  // 3. Al iniciar la app, cargamos el idioma guardado
+  useEffect(() => {
+    const guardado = localStorage.getItem("idioma-pauta") || "ES";
+    loadDictionary(guardado);
+  }, []);
+
+  // 4. Cuando el Navbar pide cambiar de idioma, disparamos la descarga
+  const changeLanguage = (lang: string) => {
+    if (lang !== currentLang) {
+      loadDictionary(lang);
+    }
+  };
+
+  const t = (path: string): string => {
     const keys = path.split(".");
-    let result = dictionaries[currentLang];
+    let result = dictionary;
 
     for (const key of keys) {
-      if (result[key] === undefined) return path; // Si no lo encuentra, devuelve la ruta
+      if (result?.[key] === undefined) return path;
       result = result[key];
     }
+
+    // Si por error apuntas a un nodo padre (objeto) en vez de al texto final
+    if (typeof result !== "string") {
+      console.warn(
+        `[Pauta App] Error de traducción: La ruta '${path}' no es un texto final.`,
+      );
+      return path;
+    }
+
     return result;
   };
 
+  // Opcional: Evitar que la página parpadee sin textos durante el milisegundo de carga
+  if (!isReady) {
+    return null; // O podrías poner un <div className="spinner">Cargando...</div>
+  }
+
   return (
-    <LanguageContext.Provider value={{ currentLang, changeLanguage, t }}>
+    <LanguageContext.Provider
+      value={{ currentLang, changeLanguage, t, languages: lang_lib, isReady }}
+    >
       {children}
     </LanguageContext.Provider>
   );
 }
 
-// 3. Creamos un Hook personalizado para que usarlo sea facilísimo
 export const useTranslation = () => {
   const context = useContext(LanguageContext);
   if (!context)

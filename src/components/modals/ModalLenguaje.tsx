@@ -10,7 +10,7 @@ interface ModalLenguajeProps {
 }
 
 export default function ModalLenguaje({ isOpen, onClose }: ModalLenguajeProps) {
-  const { currentLang, changeLanguage } = useTranslation();
+  const { currentLang, changeLanguage, languages } = useTranslation();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -21,12 +21,6 @@ export default function ModalLenguaje({ isOpen, onClose }: ModalLenguajeProps) {
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-
-  const languages = [
-    { code: "ES", name: "Español" },
-    { code: "EN", name: "English" },
-    { code: "PT", name: "Português" },
-  ];
 
   return (
     <div
@@ -63,8 +57,8 @@ export default function ModalLenguaje({ isOpen, onClose }: ModalLenguajeProps) {
               }`}
             >
               <div className="flex items-center gap-3">
-                <span className="text-sm border border-border-line bg-surface px-2 py-0.5 rounded text-text-muted font-mono">
-                  {lang.code}
+                <span className="text-sm px-2 py-0.5 rounded text-text-muted font-mono">
+                  {lang.flag}
                 </span>
                 <span>{lang.name}</span>
               </div>

@@ -1,7 +1,7 @@
 {
   "navbar": {
-    "login": "Iniciar Sesión",
-    "register": "Registrarse"
+    "login": "Inicia Sesión",
+    "register": "Regístrate"
   },
   "home": {
     "title": "Bienvenido al Editor",
