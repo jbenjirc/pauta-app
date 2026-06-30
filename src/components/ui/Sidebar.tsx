@@ -62,9 +62,9 @@ export default function Sidebar() {
           </Link>
 
           <Link
-            href="/dashboard/plantillas"
+            href="/plantillas"
             className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
-              isActive("/dashboard/plantillas")
+              isActive("/plantillas")
                 ? "bg-orange-50 text-orange-600"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
@@ -76,9 +76,9 @@ export default function Sidebar() {
           </Link>
 
           <Link
-            href="/dashboard/programas"
+            href="/programas"
             className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
-              isActive("/dashboard/programas")
+              isActive("/programas")
                 ? "bg-orange-50 text-orange-600"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
@@ -90,9 +90,9 @@ export default function Sidebar() {
           </Link>
 
           <Link
-            href="/dashboard/explorar"
+            href="/explorar"
             className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
-              isActive("/dashboard/explorar")
+              isActive("/explorar")
                 ? "bg-orange-50 text-orange-600"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
@@ -107,23 +107,9 @@ export default function Sidebar() {
 
       {/* SECCIÓN INFERIOR */}
       <div className="mt-auto p-4 flex flex-col gap-2 border-t border-gray-100">
-        <Link
-          href="/dashboard/configuracion"
-          className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
-            isActive("/dashboard/configuracion")
-              ? "bg-orange-50 text-orange-600"
-              : "text-gray-600 hover:bg-gray-50"
-          }`}
-        >
-          <Settings className="w-5 h-5 shrink-0" />
-          {!colapsado && (
-            <span className="font-medium truncate">Configuración</span>
-          )}
-        </Link>
-
         {/* Perfil */}
         <Link
-          href="/dashboard/perfil"
+          href="/perfil"
           className={`flex items-center gap-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors group ${
             colapsado ? "p-2 justify-center" : "p-3"
           }`}
