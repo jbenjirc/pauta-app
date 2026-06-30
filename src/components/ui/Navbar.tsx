@@ -48,7 +48,7 @@ export default function Navbar() {
   };
 
   // Se oculta si estamos en el editor o en el dashboard
-  if (pathname?.startsWith("/editor") || pathname?.startsWith("/dashboard")) {
+  if (pathname?.startsWith("/editor") || pathname?.startsWith("/inicio")) {
     return null;
   }
 
