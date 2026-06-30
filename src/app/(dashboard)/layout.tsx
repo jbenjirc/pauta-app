@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "@/components/ui/Sidebar"; // Ajusta el path si es necesario
+import Sidebar from "@/components/ui/Sidebar";
 
 export default function DashboardLayout({
   children,

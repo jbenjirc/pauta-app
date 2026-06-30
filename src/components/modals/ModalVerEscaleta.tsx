@@ -12,55 +12,55 @@ export default function ModalVerEscaleta({ isOpen, onClose, escaleta }: Props) {
   if (!isOpen || !escaleta) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+      <div className="bg-surface rounded-2xl p-6 w-full max-w-sm shadow-2xl relative border border-line">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-700"
+          className="absolute top-4 right-4 text-muted hover:text-main transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <h2 className="text-xl font-bold text-gray-900 mb-6 pr-8">
+        <h2 className="text-xl font-bold text-main mb-6 pr-8 truncate">
           {escaleta.titulo_programa}
         </h2>
 
-        <div className="space-y-4 text-gray-600 mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
+        <div className="space-y-4 text-muted mb-8 bg-background p-4 rounded-xl border border-line">
           {escaleta.fecha_programa && (
             <div className="flex items-center gap-3">
-              <Calendar className="w-5 h-5 text-gray-400" />
+              <Calendar className="w-5 h-5 text-muted opacity-70" />
               <span>
-                <strong className="font-medium text-gray-800">Fecha:</strong>{" "}
+                <strong className="font-medium text-main">Fecha:</strong>{" "}
                 {new Date(escaleta.fecha_programa).toLocaleDateString()}
               </span>
             </div>
           )}
           <div className="flex items-center gap-3">
-            <Clock className="w-5 h-5 text-gray-400" />
+            <Clock className="w-5 h-5 text-muted opacity-70" />
             <span>
-              <strong className="font-medium text-gray-800">Inicio:</strong>{" "}
+              <strong className="font-medium text-main">Inicio:</strong>{" "}
               {escaleta.hora_inicio_programa || "--:--"}
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <Palette className="w-5 h-5 text-gray-400" />
+            <Palette className="w-5 h-5 text-muted opacity-70" />
             <span className="flex items-center gap-2">
-              <strong className="font-medium text-gray-800">Color:</strong>{" "}
+              <strong className="font-medium text-main">Color:</strong>{" "}
               <span
-                className="w-4 h-4 rounded-full border border-gray-200"
+                className="w-4 h-4 rounded-full border border-line shadow-sm"
                 style={{ backgroundColor: escaleta.color_escaleta }}
               ></span>
             </span>
           </div>
         </div>
 
-        <div className="text-xs text-gray-400 text-center mb-4">
+        <div className="text-xs text-muted/70 text-center mb-4">
           Última edición: {new Date(escaleta.ultima_edicion).toLocaleString()}
         </div>
 
         <Link
           href={`/editor/${escaleta.slug || escaleta.id}`}
-          className="w-full flex items-center justify-center gap-2 bg-orange-600 text-white py-3 rounded-xl font-medium hover:bg-orange-700 transition-colors shadow-sm"
+          className="w-full flex items-center justify-center gap-2 bg-primary text-primary-text py-3 rounded-xl font-medium hover:opacity-90 transition-all shadow-sm"
         >
           <Edit className="w-4 h-4" /> Entrar al Editor
         </Link>

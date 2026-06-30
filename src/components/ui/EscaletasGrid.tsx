@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import EscaletaCard from "./EscaletaCard";
+import EscaletaCard from "./EscaletaCard"; // Asumiendo que también está adaptado
 
 interface Props {
   escaletas: any[];
@@ -14,18 +14,18 @@ export default function EscaletasGrid({
 }: Props) {
   if (escaletas.length === 0) {
     return (
-      <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-12 text-center">
-        <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
+      <div className="bg-surface border border-dashed border-line rounded-2xl p-12 text-center transition-colors">
+        <FileText className="w-12 h-12 text-muted mx-auto mb-4 opacity-50" />
+        <h3 className="text-lg font-medium text-main mb-2">
           No tienes escaletas aún
         </h3>
-        <p className="text-gray-500 mb-6">
+        <p className="text-muted mb-6">
           Crea tu primer programa para empezar a organizar los tiempos en
           cabina.
         </p>
         <button
           onClick={onCrearClick}
-          className="text-orange-600 font-medium hover:text-orange-700 transition-colors"
+          className="text-primary font-medium hover:opacity-80 transition-opacity"
         >
           Crear mi primera escaleta &rarr;
         </button>
