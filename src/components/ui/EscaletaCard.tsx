@@ -1,4 +1,4 @@
-import { Clock, Star } from "lucide-react";
+import { Star } from "lucide-react";
 
 interface Props {
   escaleta: any;
@@ -9,36 +9,42 @@ export default function EscaletaCard({ escaleta, onClick }: Props) {
   return (
     <div
       onClick={onClick}
-      className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md hover:border-orange-300 transition-all cursor-pointer group flex flex-col h-full relative"
+      className="bg-surface border border-line rounded-xl p-6 hover:shadow-md hover:border-primary transition-all cursor-pointer group flex flex-col h-full relative"
     >
       {/* Botón de Favorito (Estrella) */}
-      <button className="absolute top-4 right-4 text-gray-300 hover:text-yellow-400 transition-colors z-10">
+      <button
+        className="absolute top-4 right-4 text-muted hover:text-yellow-500 transition-colors z-10"
+        onClick={(e) => {
+          e.stopPropagation(); // Evita que se abra la modal al marcar favorito
+          // Aquí iría tu lógica para actualizar Supabase en el futuro
+        }}
+      >
         <Star
-          className="w-5 h-5"
-          fill={escaleta.favorito ? "currentColor" : "none"}
+          className="w-5 h-5 transition-colors"
+          fill={escaleta.favorito ? "#EAB308" : "none"}
           color={escaleta.favorito ? "#EAB308" : "currentColor"}
         />
       </button>
 
       <div className="flex items-center gap-3 mb-3 pr-8">
         <div
-          className="w-4 h-4 rounded-full shadow-inner shrink-0"
-          style={{ backgroundColor: escaleta.color_escaleta || "#EA580C" }}
+          className="w-4 h-4 rounded-full shadow-inner shrink-0 border border-line"
+          style={{ backgroundColor: escaleta.color_escaleta || "#457b9d" }}
         ></div>
-        <h3 className="text-lg font-bold text-gray-900 group-hover:text-gray-600 transition-colors truncate">
+        <h3 className="text-lg font-bold text-main group-hover:opacity-80 transition-opacity truncate">
           {escaleta.titulo_programa}
         </h3>
       </div>
 
-      <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-400">
+      <div className="mt-auto pt-4 border-t border-line flex justify-between items-center text-xs text-muted">
         <span>
           Editado: {new Date(escaleta.ultima_edicion).toLocaleDateString()}
         </span>
         <span
-          className={`px-2 py-1 rounded font-medium capitalize ${
+          className={`px-2 py-1 rounded font-medium capitalize border ${
             escaleta.estado === "activa"
-              ? "bg-green-50 text-green-600"
-              : "bg-gray-100 text-gray-600"
+              ? "bg-primary/10 text-primary border-primary/20"
+              : "bg-surface text-muted border-line"
           }`}
         >
           {escaleta.estado || "activa"}
