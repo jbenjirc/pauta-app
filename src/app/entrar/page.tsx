@@ -109,6 +109,7 @@ export default function LoginPage() {
               {t("entrar.entrarForm.register-link")}
             </Link>
           </div>
+          Prueba con test@pauta.com y pauta123 para probar funcionalidades.
         </div>
       </div>
     </div>

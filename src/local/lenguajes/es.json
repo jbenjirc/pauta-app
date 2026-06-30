@@ -1,6 +1,6 @@
 {
   "navbar": {
-    "login": "Inicia Sesión",
+    "login": "Inicia sesión",
     "register": "Regístrate",
     "MODAL-lenguaje": "Idioma"
   },
@@ -15,7 +15,7 @@
   "registro": {
     "registroForm": {
       "title": "Crea tu cuenta",
-      "description": "Comienza a organizar tus escaletas en Pauta App",
+      "description": "Comienza a organizar las escaletas de tus programas en Pauta App",
       "mail-title": "Correo electrónico",
       "mail-placeholder": "correo@pauta.app",
       "password-title": "Contraseña",
@@ -27,8 +27,8 @@
   },
   "entrar": {
     "entrarForm": {
-      "title": "Binevenido de vuelta",
-      "description": "Ingresa a tu cuenta de Pauta App",
+      "title": "Bienvenido de vuelta",
+      "description": "Entra a tu cuenta de Pauta App",
       "mail-title": "Correo electrónico",
       "mail-placeholder": "correo@pauta.app",
       "password-title": "Contraseña",

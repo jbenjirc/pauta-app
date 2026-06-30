@@ -8,5 +8,10 @@
     "code": "EN",
     "name": "English",
     "flag": "🇺🇸"
+  },
+  {
+    "code": "PT",
+    "name": "Português",
+    "flag": "🇧🇷"
   }
 ]

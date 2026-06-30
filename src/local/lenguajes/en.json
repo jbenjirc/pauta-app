@@ -1,10 +1,41 @@
 {
   "navbar": {
     "login": "Log In",
-    "register": "Sign Up"
+    "register": "Sign Up",
+    "MODAL-lenguaje": "Language"
   },
-  "home": {
-    "title": "Welcome to the Editor",
-    "subtitle": "Create your rundowns professionally."
+  "index": {
+    "mainLandingPage": {
+      "title-fragment1": "Total control of your timing,",
+      "title-fragment2": "online.",
+      "description": "Create, edit, and export your multimedia rundowns to PDF. A tool designed to prevent friction in the control room and ensure every moment happens at the exact second.",
+      "action-button": "Get Started"
+    }
+  },
+  "registro": {
+    "registroForm": {
+      "title": "Create an account",
+      "description": "Start organizing your show rundowns on Pauta App",
+      "mail-title": "Email address",
+      "mail-placeholder": "email@pauta.app",
+      "password-title": "Password",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Sign Up",
+      "login-text": "Already have an account?",
+      "login-link": "Log In"
+    }
+  },
+  "entrar": {
+    "entrarForm": {
+      "title": "Welcome back",
+      "description": "Log in to your Pauta App account",
+      "mail-title": "Email address",
+      "mail-placeholder": "email@pauta.app",
+      "password-title": "Password",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Log In",
+      "register-text": "Don't have an account?",
+      "register-link": "Sign Up"
+    }
   }
 }
