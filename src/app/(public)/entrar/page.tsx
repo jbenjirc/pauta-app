@@ -28,7 +28,7 @@ export default function LoginPage() {
         password,
       });
       if (error) throw error;
-      router.push("/dashboard");
+      router.push("/inicio");
     } catch (error: any) {
       setErrorMsj(error.message || "Credenciales incorrectas.");
     } finally {
@@ -37,20 +37,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4 font-sans transition-colors duration-300">
-      <div className="max-w-md w-full bg-surface rounded-2xl shadow-sm border border-border-line p-8 transition-colors duration-300">
+    <div className="flex-1 flex flex-col justify-center items-center p-4 font-sans w-full">
+      <div className="max-w-md w-full bg-surface rounded-2xl shadow-sm border border-line p-8 transition-colors duration-300">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-text-main mb-2">
+          <h1 className="text-2xl font-bold text-main mb-2">
             {t("entrar.entrarForm.title")}
           </h1>
-          <p className="text-text-muted text-sm">
+          <p className="text-muted text-sm">
             {t("entrar.entrarForm.description")}
           </p>
         </div>
 
         <form onSubmit={manejarLogin} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-text-main mb-1">
+            <label className="block text-sm font-medium text-main mb-1">
               {t("entrar.entrarForm.mail-title")}
             </label>
             <input
@@ -58,13 +58,13 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 bg-background border border-border-line text-text-main placeholder:text-text-muted rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+              className="w-full px-4 py-2 bg-background border border-line text-main placeholder:text-muted rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
               placeholder={t("entrar.entrarForm.mail-placeholder")}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-text-main mb-1">
+            <label className="block text-sm font-medium text-main mb-1">
               {t("entrar.entrarForm.password-title")}
             </label>
             <input
@@ -72,13 +72,13 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 bg-background border border-border-line text-text-main placeholder:text-text-muted rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+              className="w-full px-4 py-2 bg-background border border-line text-main placeholder:text-muted rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
               placeholder={t("entrar.entrarForm.password-placeholder")}
             />
           </div>
 
           {errorMsj && (
-            <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm p-3 rounded-lg border border-red-100 dark:border-red-800 transition-colors">
+            <div className="bg-danger/10 text-danger text-sm p-3 rounded-lg border border-danger/20 transition-colors">
               {errorMsj}
             </div>
           )}
@@ -100,16 +100,18 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <div className="text-sm text-text-muted">
+          <div className="text-sm text-muted mb-2">
             {t("entrar.entrarForm.register-text")}{" "}
             <Link
               href="/registro"
-              className="font-semibold text-text-main hover:text-primary transition-colors"
+              className="font-semibold text-main hover:text-primary transition-colors"
             >
               {t("entrar.entrarForm.register-link")}
             </Link>
           </div>
-          Prueba con test@pauta.com y pauta123 para probar funcionalidades.
+          <p className="text-xs text-muted/70 italic">
+            Prueba con test@pauta.com y pauta123 para probar funcionalidades.
+          </p>
         </div>
       </div>
     </div>

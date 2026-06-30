@@ -17,10 +17,10 @@ export default function DashboardPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [previewData, setPreviewData] = useState<any>(null);
 
-  // Estado del formulario (Ahora incluye la fecha por defecto de hoy)
+  // Estado del formulario
   const [nuevoPrograma, setNuevoPrograma] = useState({
     titulo: "",
-    color: "#EA580C",
+    color: "#457b9d", // Actualizado a tu token base (cerulean) en lugar de naranja estático
     horaInicio: "10:00",
     fecha: new Date().toISOString().split("T")[0],
   });
@@ -99,26 +99,26 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Loader2 className="w-8 h-8 animate-spin text-orange-600" />
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 font-sans relative">
+    <div className="min-h-screen bg-background p-8 font-sans relative transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         {/* Cabecera */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Mis Escaletas</h1>
-            <p className="text-gray-500 mt-1">
+            <h1 className="text-3xl font-bold text-main">Mis Escaletas</h1>
+            <p className="text-muted mt-1">
               Gestiona tus programas y tiempos en vivo
             </p>
           </div>
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-sm w-full sm:w-auto justify-center"
+            className="flex items-center gap-2 bg-primary hover:opacity-90 text-primary-text px-5 py-2.5 rounded-lg font-medium transition-all shadow-sm w-full sm:w-auto justify-center"
           >
             <Plus className="w-5 h-5" /> Nueva Escaleta
           </button>
