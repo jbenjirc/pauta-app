@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 
 import { LanguageProvider } from "@/contextos/LanguageContext";
+import { ThemeProvider } from "@/contextos/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,12 +35,15 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${inter.variable} font-sans`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <LanguageProvider>
-          <Navbar />
-          {children}
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <Navbar />
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
