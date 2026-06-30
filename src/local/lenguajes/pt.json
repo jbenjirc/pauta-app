@@ -1,0 +1,41 @@
+{
+  "navbar": {
+    "login": "Entrar",
+    "register": "Cadastre-se",
+    "MODAL-lenguaje": "Idioma"
+  },
+  "index": {
+    "mainLandingPage": {
+      "title-fragment1": "O controle total do seu tempo,",
+      "title-fragment2": "ao vivo.",
+      "description": "Crie, edite e exporte para PDF seus roteiros multimídia. Uma ferramenta projetada para evitar atritos na cabine e garantir que cada momento aconteça no segundo exato.",
+      "action-button": "Começar agora"
+    }
+  },
+  "registro": {
+    "registroForm": {
+      "title": "Crie sua conta",
+      "description": "Comece a organizar os roteiros dos seus programas no Pauta App",
+      "mail-title": "E-mail",
+      "mail-placeholder": "email@pauta.app",
+      "password-title": "Senha",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Cadastrar",
+      "login-text": "Já tem uma conta?",
+      "login-link": "Entrar"
+    }
+  },
+  "entrar": {
+    "entrarForm": {
+      "title": "Bem-vindo de volta",
+      "description": "Acesse sua conta do Pauta App",
+      "mail-title": "E-mail",
+      "mail-placeholder": "email@pauta.app",
+      "password-title": "Senha",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Entrar",
+      "register-text": "Não tem uma conta?",
+      "register-link": "Cadastre-se"
+    }
+  }
+}

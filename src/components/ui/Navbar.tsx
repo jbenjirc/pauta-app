@@ -1,49 +1,112 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Globe } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { Globe, Moon, Sun } from "lucide-react";
+import LenguajeModal from "@/components/modals/ModalLenguaje";
+import { useTranslation } from "@/contextos/LanguageContext";
 
 export default function Navbar() {
   const pathname = usePathname();
 
+  // Estados
+  const [isDark, setIsDark] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+
+  const { t, currentLang } = useTranslation();
+
+  // 1. Al cargar la app, leemos la memoria y aplicamos el tema de inmediato
+  useEffect(() => {
+    const temaGuardado = localStorage.getItem("tema-pauta");
+    const esOscuro = temaGuardado === "dark";
+
+    setIsDark(esOscuro); // Actualizamos el ícono del sol/luna
+
+    // Aplicamos la clase al HTML para que pinte los colores
+    const html = document.documentElement;
+    if (esOscuro) {
+      html.classList.add("dark");
+    } else {
+      html.classList.remove("dark");
+    }
+  }, []);
+
+  // 2. Creamos una función que controle todo cuando haces clic
+  const toggleTheme = () => {
+    const nuevoEstado = !isDark;
+    setIsDark(nuevoEstado);
+
+    const html = document.documentElement;
+    if (nuevoEstado) {
+      html.classList.add("dark");
+      localStorage.setItem("tema-pauta", "dark"); // Guardamos en el disco duro
+    } else {
+      html.classList.remove("dark");
+      localStorage.setItem("tema-pauta", "light"); // Guardamos en el disco duro
+    }
+  };
+
   // Se oculta si estamos en el editor o en el dashboard
-  if (pathname.startsWith("/editor") || pathname.startsWith("/dashboard")) {
+  if (pathname?.startsWith("/editor") || pathname?.startsWith("/dashboard")) {
     return null;
   }
 
   return (
-    <header className="w-full bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-      <div className="flex items-center gap-2">
-        <Link
-          href="/"
-          className="text-xl font-bold text-gray-900 hover:opacity-80 transition-opacity"
-        >
-          Pauta App
-        </Link>
-      </div>
+    <>
+      <header className="w-full bg-background border-b border-border-line px-6 py-4 flex items-center justify-between sticky top-0 z-50 transition-colors duration-300">
+        <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="text-xl font-bold text-text-main hover:opacity-80 transition-opacity"
+          >
+            Pauta App
+          </Link>
+        </div>
 
-      <div className="flex items-center gap-4">
-        <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2 py-1 rounded-md hover:bg-gray-100">
-          <Globe className="w-4 h-4" />
-          <span>ES</span>
-        </button>
+        <div className="flex items-center gap-4">
+          {/* Botón de Modo Oscuro */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center w-8 h-8 rounded-md text-text-muted hover:text-text-main hover:bg-surface transition-colors"
+            aria-label="Alternar tema"
+          >
+            {isDark ? (
+              <Sun className="w-4 h-4 text-yellow-500" />
+            ) : (
+              <Moon className="w-4 h-4 text-indigo-500" />
+            )}
+          </button>
 
-        <div className="h-5 w-px bg-gray-300 mx-2 hidden sm:block"></div>
+          {/* Selector de idioma que abre la modal */}
+          <button
+            onClick={() => setIsLangOpen(true)}
+            className="flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-text-main transition-colors px-2 py-1 rounded-md hover:bg-surface"
+          >
+            <Globe className="w-4 h-4" />
+            <span>{currentLang}</span>
+          </button>
 
-        <Link
-          href="/entrar"
-          className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
-        >
-          Iniciar Sesión
-        </Link>
-        <Link
-          href="/registro"
-          className="text-sm font-medium bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
-        >
-          Registrarse
-        </Link>
-      </div>
-    </header>
+          <div className="h-5 w-px bg-border-line mx-2 hidden sm:block"></div>
+
+          <Link
+            href="/entrar"
+            className="text-sm font-medium text-text-main hover:text-primary transition-colors"
+          >
+            {t("navbar.login")}
+          </Link>
+
+          <Link
+            href="/registro"
+            className="text-sm font-medium bg-primary text-primary-text hover:opacity-90 px-4 py-2 rounded-lg transition-all shadow-sm"
+          >
+            {t("navbar.register")}
+          </Link>
+        </div>
+      </header>
+
+      {/* Instancia de la Modal fuera del header para evitar problemas de overflow */}
+      <LenguajeModal isOpen={isLangOpen} onClose={() => setIsLangOpen(false)} />
+    </>
   );
 }

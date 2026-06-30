@@ -1,0 +1,17 @@
+[
+  {
+    "code": "ES",
+    "name": "Español",
+    "flag": "🇲🇽"
+  },
+  {
+    "code": "EN",
+    "name": "English",
+    "flag": "🇺🇸"
+  },
+  {
+    "code": "PT",
+    "name": "Português",
+    "flag": "🇧🇷"
+  }
+]

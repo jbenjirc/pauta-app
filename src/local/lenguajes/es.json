@@ -1,0 +1,41 @@
+{
+  "navbar": {
+    "login": "Inicia sesión",
+    "register": "Regístrate",
+    "MODAL-lenguaje": "Idioma"
+  },
+  "index": {
+    "mainLandingPage": {
+      "title-fragment1": "El control total de tus tiempos,",
+      "title-fragment2": "en vivo.",
+      "description": "Crea, edita y exporta a PDF tus escaletas multimedia. Una herramienta diseñada para evitar fricciones en cabina y asegurar que cada momento ocurra en el segundo exacto.",
+      "action-button": "Comienza ahora"
+    }
+  },
+  "registro": {
+    "registroForm": {
+      "title": "Crea tu cuenta",
+      "description": "Comienza a organizar las escaletas de tus programas en Pauta App",
+      "mail-title": "Correo electrónico",
+      "mail-placeholder": "correo@pauta.app",
+      "password-title": "Contraseña",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Registrarse",
+      "login-text": "¿Ya tienes una cuenta?",
+      "login-link": "Inicia sesión"
+    }
+  },
+  "entrar": {
+    "entrarForm": {
+      "title": "Bienvenido de vuelta",
+      "description": "Entra a tu cuenta de Pauta App",
+      "mail-title": "Correo electrónico",
+      "mail-placeholder": "correo@pauta.app",
+      "password-title": "Contraseña",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Entrar",
+      "register-text": "¿No tienes una cuenta?",
+      "register-link": "Regístrate"
+    }
+  }
+}
