@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import PanelControl from "@/components/editor/PanelControl";
 import EscaletaTable from "@/components/editor/EscaletaTable";
 import ControlesAvanzadosSidebar from "@/components/editor/ControlesAvanzadosSidebar";
@@ -18,9 +18,9 @@ export default function EditorClient({
   initialBloques,
 }: EditorClientProps) {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const { guardando } = useEditorContext();
 
-  // Toda la complejidad del estado y base de datos delegada al Hook
+  const { setEjecutarGuardado } = useEditorContext();
+
   const {
     escaleta,
     setEscaleta,
@@ -28,8 +28,27 @@ export default function EditorClient({
     agregarBloque,
     actualizarBloque,
     eliminarBloque,
-    // guardarCambios // Puedes pasarlo a un botón o manejarlo como requieras
+    guardarCambios,
   } = useEditorManager(initialEscaleta, initialBloques);
+
+  // 1. Mantenemos el Ref para tener siempre la función más fresca sin disparar renders
+  const guardarCambiosRef = useRef(guardarCambios);
+
+  useEffect(() => {
+    guardarCambiosRef.current = guardarCambios;
+  }, [guardarCambios]);
+
+  // 2. Inyectamos la función al Navbar UNA SOLA VEZ
+  useEffect(() => {
+    setEjecutarGuardado(async (redirigir?: boolean) => {
+      if (guardarCambiosRef.current) {
+        await guardarCambiosRef.current(redirigir);
+      }
+    });
+    // Apagamos la advertencia del linter porque SABEMOS que setEjecutarGuardado
+    // viene del contexto y causaría un loop si la agregamos.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const bloquesConTiempos = calcularTiemposEscaleta(
     escaleta?.hora_inicio_programa || "00:00",
@@ -45,6 +64,7 @@ export default function EditorClient({
             setEscaleta={setEscaleta}
             onOpenAdvancedControls={() => setIsAdvancedOpen(true)}
           />
+
           <EscaletaTable
             bloques={bloquesConTiempos}
             colorPrincipal={escaleta?.color_escaleta}
@@ -63,8 +83,6 @@ export default function EditorClient({
         onClose={() => setIsAdvancedOpen(false)}
         avanzados={escaleta}
         setAvanzados={setEscaleta}
-        onGuardarAvanzados={() => {}} // Conecta aquí tu guardarAvanzados del hook
-        guardando={guardando}
       />
     </>
   );

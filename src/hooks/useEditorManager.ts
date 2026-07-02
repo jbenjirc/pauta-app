@@ -1,8 +1,7 @@
 // hooks/useEditorManager.ts
-import { useState } from "react";
-import { createClient } from "@/lib/supabase"; // Cliente de navegador
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client"; // Ajusta según tu path real
 import { useRouter } from "next/navigation";
-import { Bloque } from "@/lib/types";
 import { useEditorContext } from "@/contextos/EditorContext";
 
 export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
@@ -14,6 +13,15 @@ export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
 
   const { setGuardando, setUltimaEdicion } = useEditorContext();
 
+  // --- SOLUCIÓN: Sincronizar la fecha inicial de la BD con el Contexto ---
+  useEffect(() => {
+    if (initialEscaleta?.ultima_edicion) {
+      setUltimaEdicion(initialEscaleta.ultima_edicion);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // ------------------------------------------------------------------------
+
   const agregarBloque = () => {
     setBloques((prev) => [
       ...prev,
@@ -24,13 +32,16 @@ export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
         duracion: 5,
         actividad: "",
         participante: "",
-        descripcion_indicaciones: "",
+        notas_bloque: "",
+        responsable_tecnico: "",
+        recursos_drive_url: "",
+        comentarios_cabina: "",
         es_nuevo: true,
       },
     ]);
   };
 
-  const actualizarBloque = (id: string, campo: keyof Bloque, valor: any) => {
+  const actualizarBloque = (id: string, campo: string, valor: any) => {
     setBloques((prev) =>
       prev.map((b) => (b.id === id ? { ...b, [campo]: valor } : b)),
     );
@@ -40,7 +51,6 @@ export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
     const bloqueAEliminar = bloques.find((b) => b.id === id);
     if (!bloqueAEliminar) return;
 
-    // Actualización optimista en la UI
     setBloques((prev) =>
       prev
         .filter((b) => b.id !== id)
@@ -64,7 +74,13 @@ export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
           nombre_iglesia: escaleta.nombre_iglesia,
           fecha_programa: escaleta.fecha_programa,
           hora_inicio_programa: escaleta.hora_inicio_programa,
+          hora_inicio_stream: escaleta.hora_inicio_stream,
+          floor_manager: escaleta.floor_manager,
+          director_tecnico: escaleta.director_tecnico,
           color_escaleta: escaleta.color_escaleta,
+          mostrar_col_responsable: escaleta.mostrar_col_responsable,
+          mostrar_col_recursos: escaleta.mostrar_col_recursos,
+          mostrar_col_comentarios: escaleta.mostrar_col_comentarios,
           ultima_edicion: fechaActualizacion,
         })
         .eq("id", escaleta.id);
@@ -78,9 +94,9 @@ export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
         duracion_minutos: b.duracion,
         actividad: b.actividad,
         participante: b.participante,
+        notas_bloque: b.notas_bloque, // Se guarda la nota
         responsable_tecnico: b.responsable_tecnico,
         recursos_drive_url: b.recursos_drive_url,
-        descripcion_indicaciones: b.descripcion_indicaciones,
         comentarios_cabina: b.comentarios_cabina,
       }));
 
@@ -95,19 +111,15 @@ export function useEditorManager(initialEscaleta: any, initialBloques: any[]) {
       setUltimaEdicion(fechaActualizacion);
 
       if (redirigir) {
-        router.push("/inicio");
-      } else {
-        alert("¡Cambios guardados con éxito!");
+        router.push("/escaletas");
       }
     } catch (error: any) {
-      console.error("❌ Error en Supabase:", error);
+      console.error("❌ Error en guardado unificado:", error);
       alert(`Hubo un error al guardar: ${error.message}`);
     } finally {
       setGuardando(false);
     }
   };
-
-  // Puedes añadir aquí también guardarAvanzados() siguiendo la misma lógica
 
   return {
     escaleta,
