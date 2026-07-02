@@ -1,17 +1,5 @@
-import { Plus, Trash2 } from "lucide-react";
-import { BloqueCalculado } from "@/lib/types";
-
-type EscaletaTableProps = {
-  bloques: BloqueCalculado[];
-  actualizarBloque: (id: string, campo: any, valor: any) => void;
-  eliminarBloque: (id: string) => void;
-  agregarBloque: () => void;
-  colorPrincipal: string;
-  // Agregamos las propiedades booleanas al Tipado
-  mostrarResponsable?: boolean;
-  mostrarRecursos?: boolean;
-  mostrarComentarios?: boolean;
-};
+// components/editor/EscaletaTable.tsx
+import { Plus, Trash2, GripVertical, FileText } from "lucide-react";
 
 export default function EscaletaTable({
   bloques,
@@ -19,161 +7,72 @@ export default function EscaletaTable({
   eliminarBloque,
   agregarBloque,
   colorPrincipal,
-  mostrarResponsable,
-  mostrarRecursos,
-  mostrarComentarios,
-}: EscaletaTableProps) {
+}: any) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-colors dark:bg-gray-800 dark:border-gray-700">
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr
-            className="text-white text-sm"
-            style={{ backgroundColor: colorPrincipal || "#f97316" }}
-          >
-            <th className="p-3 font-semibold w-12 text-center">No.</th>
-            <th className="p-3 font-semibold w-20">Inicio</th>
-            <th className="p-3 font-semibold w-20">Fin</th>
-            <th className="p-3 font-semibold w-24">Dur (min)</th>
-            <th className="p-3 font-semibold">Actividad</th>
-            <th className="p-3 font-semibold">Participante</th>
-
-            {/* ENCABEZADOS CONDICIONALES */}
-            {mostrarResponsable && (
-              <th className="p-3 font-semibold">Responsable</th>
-            )}
-            {mostrarRecursos && <th className="p-3 font-semibold">Recursos</th>}
-            {mostrarComentarios && (
-              <th className="p-3 font-semibold">Comentarios</th>
-            )}
-
-            <th className="p-3 font-semibold">Recursos / Notas</th>
-            <th className="p-3 font-semibold w-12"></th>
+    <div className="rounded-2xl border border-border-line bg-surface overflow-hidden shadow-xl">
+      <table className="w-full border-collapse text-left">
+        <thead className="bg-background/50 text-text-muted text-xs uppercase tracking-wider">
+          <tr>
+            <th className="px-4 py-4 font-medium w-12 text-center">#</th>
+            <th className="px-4 py-4 font-medium w-24">Inicio</th>
+            <th className="px-4 py-4 font-medium w-20">Min</th>
+            <th className="px-4 py-4 font-medium">Actividad / Segmento</th>
+            <th className="px-4 py-4 font-medium">Participante</th>
+            <th className="px-4 py-4 font-medium w-16 text-center">Acción</th>
           </tr>
         </thead>
-        <tbody>
-          {bloques.map((bloque: any, index) => (
+        <tbody className="divide-y divide-border-line">
+          {bloques.map((bloque: any, index: number) => (
             <tr
               key={bloque.id}
-              className="border-b border-gray-100 hover:bg-gray-50 transition-colors group dark:border-gray-700 dark:hover:bg-gray-700"
+              className="group hover:bg-primary/5 transition-colors"
             >
-              <td className="p-3 text-center text-sm font-medium text-gray-400">
+              <td className="px-4 py-3 text-center text-text-muted font-mono text-sm">
                 {index + 1}
               </td>
-              <td className="p-3 text-sm font-mono font-medium text-gray-400">
-                {bloque.horaInicioFormat}
+              <td className="px-4 py-3 font-mono font-bold text-primary">
+                {bloque.hora_inicio || "00:00"}
               </td>
-              <td className="p-3 text-sm font-mono font-medium text-gray-400">
-                {bloque.horaFinFormat}
-              </td>
-
-              <td className="p-3 text-sm font-mono font-medium text-gray-400">
+              <td className="px-4 py-3">
                 <input
                   type="number"
-                  value={bloque.duracion || ""}
+                  value={bloque.duracion}
                   onChange={(e) =>
                     actualizarBloque(
                       bloque.id,
                       "duracion",
-                      parseInt(e.target.value) || 0,
+                      parseInt(e.target.value),
                     )
                   }
-                  className="w-full bg-white border border-gray-300 rounded px-2 py-1 text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all"
-                  min="0"
+                  className="w-12 bg-transparent outline-none focus:text-primary font-bold"
                 />
               </td>
-
-              <td className="p-3">
+              <td className="px-4 py-3">
                 <input
                   type="text"
                   value={bloque.actividad}
+                  placeholder="Ej: Bienvenida y Oración..."
                   onChange={(e) =>
                     actualizarBloque(bloque.id, "actividad", e.target.value)
                   }
-                  placeholder="Ej. Oración..."
-                  className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
+                  className="w-full bg-transparent outline-none text-text-main font-medium placeholder:italic placeholder:opacity-20"
                 />
               </td>
-
-              <td className="p-3">
+              <td className="px-4 py-3">
                 <input
                   type="text"
                   value={bloque.participante}
+                  placeholder="Nombre..."
                   onChange={(e) =>
                     actualizarBloque(bloque.id, "participante", e.target.value)
                   }
-                  placeholder="Nombre..."
-                  className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
+                  className="w-full bg-transparent outline-none text-text-muted"
                 />
               </td>
-
-              {/* CELDAS CONDICIONALES DINÁMICAS */}
-              {mostrarResponsable && (
-                <td className="p-3">
-                  <input
-                    type="text"
-                    value={bloque.responsable_tecnico || ""}
-                    onChange={(e) =>
-                      actualizarBloque(
-                        bloque.id,
-                        "responsable_tecnico",
-                        e.target.value,
-                      )
-                    }
-                    placeholder="Responsable técnico..."
-                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
-                  />
-                </td>
-              )}
-
-              {mostrarRecursos && (
-                <td className="p-3">
-                  <input
-                    type="text"
-                    value={bloque.url || ""}
-                    onChange={(e) =>
-                      actualizarBloque(bloque.id, "url", e.target.value)
-                    }
-                    placeholder="https://link-recurso.com"
-                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all font-mono text-xs text-blue-600 dark:text-blue-400"
-                  />
-                </td>
-              )}
-
-              {mostrarComentarios && (
-                <td className="p-3">
-                  <input
-                    type="text"
-                    value={bloque.comentarios_cabina || ""}
-                    onChange={(e) =>
-                      actualizarBloque(
-                        bloque.id,
-                        "comentarios_cabina",
-                        e.target.value,
-                      )
-                    }
-                    placeholder="Notas para producción..."
-                    className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
-                  />
-                </td>
-              )}
-
-              <td className="p-3">
-                <textarea
-                  value={bloque.recursos}
-                  onChange={(e) =>
-                    actualizarBloque(bloque.id, "recursos", e.target.value)
-                  }
-                  placeholder="Micrófonos, himnos, etc."
-                  rows={1}
-                  className="w-full bg-transparent border border-transparent hover:border-gray-200 focus:border-orange-500 focus:bg-white rounded px-2 py-1 text-sm outline-none transition-all"
-                />
-              </td>
-
-              <td className="p-3 text-center">
+              <td className="px-4 py-3 text-center">
                 <button
                   onClick={() => eliminarBloque(bloque.id)}
-                  className="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                  className="p-2 text-danger opacity-0 group-hover:opacity-100 hover:bg-danger/10 rounded-lg transition-all"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -183,14 +82,13 @@ export default function EscaletaTable({
         </tbody>
       </table>
 
-      <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-center dark:bg-gray-700 dark:border-gray-600">
-        <button
-          onClick={agregarBloque}
-          className="flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700 bg-orange-100 hover:bg-orange-200 px-4 py-2 rounded-lg transition-colors dark:bg-gray-600 dark:text-gray-300 dark:hover:text-blue-100 dark:hover:bg-gray-500"
-        >
-          <Plus className="w-4 h-4" /> Agregar Bloque
-        </button>
-      </div>
+      <button
+        onClick={agregarBloque}
+        className="w-full py-4 flex items-center justify-center gap-2 text-primary hover:bg-primary hover:text-primary-text transition-all font-bold border-t border-dashed border-border-line"
+      >
+        <Plus className="w-5 h-5" />
+        Añadir nuevo bloque
+      </button>
     </div>
   );
 }
