@@ -44,7 +44,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
             className="flex items-center justify-center w-8 h-8 rounded-md text-muted hover:text-main hover:bg-border-line/20 transition-colors"
@@ -66,11 +66,11 @@ export default function Navbar() {
             <span>{currentLang}</span>
           </button>
 
-          <div className="h-5 w-px bg-line mx-2 hidden sm:block"></div>
+          <div className="h-5 w-px bg-border-line mx-2 hidden sm:block"></div>
 
           {/* Aquí inyectamos el nuevo componente */}
           {isLoading ? (
-            <div className="w-24 h-8 bg-border-line/30 animate-pulse rounded-lg" />
+            <div className="w-124s h-8 bg-border-line/30 animate-pulse rounded-lg" />
           ) : user ? (
             <UserNavbarMenu />
           ) : (
