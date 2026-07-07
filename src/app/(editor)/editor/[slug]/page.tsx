@@ -51,8 +51,8 @@ export default async function EditorPage({ params }: PageProps) {
     participante: b.participante || "",
     responsable_tecnico: b.responsable_tecnico || "",
     recursos_drive_url: b.recursos_drive_url || "",
-    descripcion_indicaciones: b.descripcion_indicaciones || "",
     comentarios_cabina: b.comentarios_cabina || "",
+    notas_bloque: b.notas_bloque || "",
     es_nuevo: false,
   }));
 

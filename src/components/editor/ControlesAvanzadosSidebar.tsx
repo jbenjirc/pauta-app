@@ -1,5 +1,15 @@
 // components/editor/ControlesAvanzadosSidebar.tsx
-import { X, Tv, Layout, Palette, Users } from "lucide-react";
+import {
+  X,
+  Tv,
+  Layout,
+  Palette,
+  Users,
+  ContactRound,
+  Link,
+  MessageSquareMore,
+  Headset,
+} from "lucide-react";
 
 export default function ControlesAvanzadosSidebar({
   isOpen,
@@ -33,7 +43,7 @@ export default function ControlesAvanzadosSidebar({
           <div className="flex items-center justify-between mb-8 border-b border-border-line pb-4">
             <h2 className="text-2xl font-bold text-text-main flex items-center gap-2">
               <Tv className="text-primary" />
-              Configuración de Mesa
+              Ajustes avanzados
             </h2>
             <button
               onClick={onClose}
@@ -46,12 +56,12 @@ export default function ControlesAvanzadosSidebar({
           <div className="flex-1 space-y-8 pr-2">
             <section className="space-y-4">
               <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
-                <Users className="w-4 h-4" /> Personal de Cabina
+                <Headset className="w-4 h-4" /> Personal de cabina
               </h3>
               <div className="space-y-3">
                 <div>
                   <label className="text-xs text-text-muted font-bold block mb-1">
-                    Hora Inicio del Stream
+                    Hora de inicio de transmisión
                   </label>
                   <input
                     type="time"
@@ -62,7 +72,7 @@ export default function ControlesAvanzadosSidebar({
                     className="w-full p-3 bg-bg-app border border-border-line rounded-xl text-text-main outline-none focus:border-primary"
                   />
                   <p className="text-xs text-text-muted mt-1 opacity-70">
-                    Útil si la transmisión comienza antes del programa en vivo.
+                    La transmisión comienza antes de la programación principal.
                   </p>
                 </div>
                 <div>
@@ -77,6 +87,9 @@ export default function ControlesAvanzadosSidebar({
                     }
                     className="w-full p-3 bg-bg-app border border-border-line rounded-xl text-text-main outline-none focus:border-primary"
                   />
+                  <p className="text-xs text-text-muted mt-1 opacity-70">
+                    Encargado de piso durante el programa.
+                  </p>
                 </div>
                 <div>
                   <label className="text-xs text-text-muted font-bold block mb-1">
@@ -90,6 +103,9 @@ export default function ControlesAvanzadosSidebar({
                     }
                     className="w-full p-3 bg-bg-app border border-border-line rounded-xl text-text-main outline-none focus:border-primary"
                   />
+                  <p className="text-xs text-text-muted mt-1 opacity-70">
+                    Nombre del técnico principal encargado de cabina.
+                  </p>
                 </div>
               </div>
             </section>
@@ -102,21 +118,29 @@ export default function ControlesAvanzadosSidebar({
                 {[
                   {
                     id: "mostrar_col_responsable",
-                    label: "Responsable Técnico",
+                    label: "Columna Responsable",
+                    icon: "ContactRound",
                   },
                   {
                     id: "mostrar_col_recursos",
-                    label: "Recursos Drive / Links",
+                    label: "Columna Recursos",
+                    icon: "Link",
                   },
-                  { id: "mostrar_col_comentarios", label: "Notas de Cabina" },
+                  {
+                    id: "mostrar_col_comentarios",
+                    label: "Notas de cabina",
+                    icon: "MessageSquareMore",
+                  },
                 ].map((col) => (
                   <label
                     key={col.id}
                     className="flex items-center justify-between p-3 rounded-xl border border-border-line hover:border-primary cursor-pointer transition-all bg-bg-app/50"
                   >
-                    <span className="text-text-main text-sm font-medium">
-                      {col.label}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-text-main text-sm font-medium">
+                        {col.label}
+                      </span>
+                    </div>
                     <input
                       type="checkbox"
                       checked={!!avanzados?.[col.id]}

@@ -62,7 +62,7 @@ export default function PanelControl({
         className="flex items-center gap-2 px-4 py-2 bg-surface border border-border-line text-text-main rounded-xl hover:bg-primary hover:text-primary-text transition-all active:scale-95 shadow-sm"
       >
         <Settings2 className="w-4 h-4" />
-        <span>Ajustes de Mesa</span>
+        <span>Avanzados</span>
       </button>
     </header>
   );
