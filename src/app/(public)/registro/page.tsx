@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import { UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/contextos/LanguageContext";

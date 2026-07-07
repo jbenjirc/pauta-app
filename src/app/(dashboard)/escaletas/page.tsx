@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import { Plus, Loader2 } from "lucide-react";
 import EscaletasGrid from "@/components/ui/EscaletasGrid";
 import ModalCrearEscaleta from "@/components/modals/ModalCrearEscaleta";

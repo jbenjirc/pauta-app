@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
+import { SessionProvider } from "@/contextos/SessionContext";
 import { LanguageProvider } from "@/contextos/LanguageContext";
 import { ThemeProvider } from "@/contextos/ThemeContext";
 
@@ -37,12 +38,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-background text-main">
-        <ThemeProvider>
-          <LanguageProvider>
-            {/* ROOT LAYOUT */}
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            <LanguageProvider>
+              {/* ROOT LAYOUT */}
+              {children}
+            </LanguageProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

@@ -1,100 +1,69 @@
-import { Building, Clock, Calendar, Palette } from "lucide-react";
+// components/editor/PanelControl.tsx
+import { Settings2, Calendar, Clock } from "lucide-react";
 
-type PanelGeneralProps = {
+interface PanelControlProps {
   escaleta: any;
-  setEscaleta: (escaleta: any) => void;
-  onOpenAdvancedControls?: () => void;
-};
+  setEscaleta: (data: any) => void;
+  onOpenAdvancedControls: () => void;
+}
 
 export default function PanelControl({
   escaleta,
   setEscaleta,
   onOpenAdvancedControls,
-}: PanelGeneralProps) {
-  // Evitamos renderizar si la escaleta aún no carga
-  if (!escaleta) return null;
+}: PanelControlProps) {
+  const handleChange = (field: string, value: string) => {
+    setEscaleta({ ...escaleta, [field]: value });
+  };
 
   return (
-    <div className="bg-gray-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8 transition-colors dark:bg-gray-800 dark:border-gray-700">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300 flex items-center gap-1">
-            Título del Programa
-          </label>
+    <header className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between border-b border-border-line pb-6">
+      <div className="flex-1 space-y-2">
+        <input
+          type="text"
+          value={escaleta?.titulo_programa || ""}
+          onChange={(e) => handleChange("titulo_programa", e.target.value)}
+          placeholder="Nombre del Programa"
+          className="w-full bg-transparent text-4xl font-bold text-text-main outline-none placeholder:opacity-30 focus:ring-2 focus:ring-primary/20 rounded-lg px-2 -ml-2"
+        />
+        <div className="flex flex-wrap items-center gap-4 text-text-muted">
           <input
             type="text"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none font-medium"
-            value={escaleta.titulo_programa || ""}
-            onChange={(e) =>
-              setEscaleta({ ...escaleta, titulo_programa: e.target.value })
-            }
+            value={escaleta?.nombre_iglesia || ""}
+            onChange={(e) => handleChange("nombre_iglesia", e.target.value)}
+            placeholder="Nombre de la Iglesia"
+            className="bg-transparent border-none outline-none focus:text-primary transition-colors"
           />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
-            <Building className="w-4 h-4" /> Iglesia
-          </label>
-          <input
-            type="text"
-            placeholder="Ej. Narvarte"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-            value={escaleta.nombre_iglesia || ""}
-            onChange={(e) =>
-              setEscaleta({ ...escaleta, nombre_iglesia: e.target.value })
-            }
-          />
-        </div>
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
-              <Clock className="w-4 h-4" /> Inicio
-            </label>
-            <input
-              type="time"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-              value={escaleta.hora_inicio_programa || ""}
-              onChange={(e) =>
-                setEscaleta({
-                  ...escaleta,
-                  hora_inicio_programa: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
-              <Calendar className="w-4 h-4" /> Fecha
-            </label>
+          <div className="flex items-center gap-2 border-l border-border-line pl-4">
+            <Calendar className="w-4 h-4" />
             <input
               type="date"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-              value={escaleta.fecha_programa || ""}
-              onChange={(e) =>
-                setEscaleta({ ...escaleta, fecha_programa: e.target.value })
-              }
+              value={escaleta?.fecha_programa || ""}
+              onChange={(e) => handleChange("fecha_programa", e.target.value)}
+              className="bg-transparent outline-none cursor-pointer"
             />
           </div>
-          <div className="w-16">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1 dark:text-gray-300">
-              <Palette className="w-4 h-4" />
-            </label>
+          <div className="flex items-center gap-2 border-l border-border-line pl-4">
+            <Clock className="w-4 h-4" />
             <input
-              type="color"
-              className="w-full h-[42px] p-1 border border-gray-300 rounded-lg cursor-pointer"
-              value={escaleta.color_escaleta || "#EA580C"}
+              type="time"
+              value={escaleta?.hora_inicio_programa || ""}
               onChange={(e) =>
-                setEscaleta({ ...escaleta, color_escaleta: e.target.value })
+                handleChange("hora_inicio_programa", e.target.value)
               }
+              className="bg-transparent outline-none cursor-pointer"
             />
           </div>
         </div>
       </div>
-      <span
-        className="text-sm text-gray-400 mt-3 block hover:text-gray-600 transition-colors cursor-pointer dark:hover:text-gray-300"
+
+      <button
         onClick={onOpenAdvancedControls}
+        className="flex items-center gap-2 px-4 py-2 bg-surface border border-border-line text-text-main rounded-xl hover:bg-primary hover:text-primary-text transition-all active:scale-95 shadow-sm"
       >
-        Configuración avanzada
-      </span>
-    </div>
+        <Settings2 className="w-4 h-4" />
+        <span>Avanzados</span>
+      </button>
+    </header>
   );
 }

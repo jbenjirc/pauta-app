@@ -1,3 +1,4 @@
+// components/layout/Navbar.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -6,7 +7,9 @@ import { usePathname } from "next/navigation";
 import { Globe, Moon, Sun } from "lucide-react";
 import LenguajeModal from "@/components/modals/ModalLenguaje";
 import { useTranslation } from "@/contextos/LanguageContext";
-import { useTheme } from "next-themes"; // Importación directa
+import { useTheme } from "next-themes";
+import { useSession } from "@/contextos/SessionContext";
+import UserNavbarMenu from "./UserNavbarMenu"; // <-- El nuevo componente
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -15,7 +18,8 @@ export default function Navbar() {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const { t, currentLang } = useTranslation();
 
-  // Escudo de hidratación
+  const { user, isLoading } = useSession();
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -40,13 +44,12 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
             className="flex items-center justify-center w-8 h-8 rounded-md text-muted hover:text-main hover:bg-border-line/20 transition-colors"
             aria-label="Alternar tema"
           >
-            {/* Si no ha montado, mostramos el botón vacío para mantener el width/height */}
             {mounted &&
               (resolvedTheme === "dark" ? (
                 <Sun className="w-4 h-4" />
@@ -63,21 +66,29 @@ export default function Navbar() {
             <span>{currentLang}</span>
           </button>
 
-          <div className="h-5 w-px bg-line mx-2 hidden sm:block"></div>
+          <div className="h-5 w-px bg-border-line mx-2 hidden sm:block"></div>
 
-          <Link
-            href="/entrar"
-            className="text-sm font-medium text-main hover:text-primary transition-colors"
-          >
-            {t("navbar.login")}
-          </Link>
-
-          <Link
-            href="/registro"
-            className="text-sm font-medium bg-primary text-primary-text hover:opacity-90 px-4 py-2 rounded-lg transition-all shadow-sm"
-          >
-            {t("navbar.register")}
-          </Link>
+          {/* Aquí inyectamos el nuevo componente */}
+          {isLoading ? (
+            <div className="w-124s h-8 bg-border-line/30 animate-pulse rounded-lg" />
+          ) : user ? (
+            <UserNavbarMenu />
+          ) : (
+            <>
+              <Link
+                href="/entrar"
+                className="text-sm font-medium text-main hover:text-primary transition-colors"
+              >
+                {t("navbar.login")}
+              </Link>
+              <Link
+                href="/registro"
+                className="text-sm font-medium bg-primary text-primary-text hover:opacity-90 px-4 py-2 rounded-lg transition-all shadow-sm"
+              >
+                {t("navbar.register")}
+              </Link>
+            </>
+          )}
         </div>
       </header>
 
