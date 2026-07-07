@@ -2,7 +2,8 @@
 "use client";
 
 import {
-  ArrowLeft,
+  PanelLeftOpen,
+  PanelRightOpen,
   Loader2,
   CloudUpload,
   CloudSync,
@@ -37,20 +38,9 @@ export default function NavbarEditor() {
   return (
     <>
       <header className="bg-surface border-b border-border-line px-6 py-4 flex justify-between items-center shadow-sm shrink-0 z-40 transition-colors">
-        <button
-          onClick={() => ejecutarGuardado(true)} // 'true' activará la redirección a /escaletas
-          disabled={guardando}
-          className="flex items-center gap-2 text-text-muted hover:text-text-main transition-colors disabled:opacity-50"
-        >
-          {guardando ? (
-            <Loader2 className="w-5 h-5 animate-spin text-primary" />
-          ) : (
-            <ArrowLeft className="w-5 h-5" />
-          )}
-          <span className="font-medium hidden sm:inline">
-            {guardando ? "Guardando y saliendo..." : "Volver"}
-          </span>
-        </button>
+        <div>
+          <PanelLeftOpen className="w-5 h-5 text-text-muted opacity-70" />
+        </div>
 
         <div className="flex items-center gap-3">
           <div className="hidden md:flex items-center gap-1 mr-4">

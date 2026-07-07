@@ -60,6 +60,8 @@ export default function ModalVerEscaleta({ isOpen, onClose, escaleta }: Props) {
 
         <Link
           href={`/editor/${escaleta.slug || escaleta.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 bg-primary text-primary-text py-3 rounded-xl font-medium hover:opacity-90 transition-all shadow-sm"
         >
           <Edit className="w-4 h-4" /> Entrar al Editor
