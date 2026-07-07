@@ -39,7 +39,7 @@ export default function NavbarEditor() {
     <>
       <header className="bg-surface border-b border-border-line px-6 py-4 flex justify-between items-center shadow-sm shrink-0 z-40 transition-colors">
         <div>
-          <PanelLeftOpen className="w-5 h-5 text-text-muted opacity-70" />
+          {/* <PanelLeftOpen className="w-5 h-5 text-text-muted opacity-70" /> */}
         </div>
 
         <div className="flex items-center gap-3">
