@@ -1,6 +1,7 @@
+// src/app/(editor)/editor/[slug]/EditorClient.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import PanelControl from "@/components/editor/PanelControl";
 import EscaletaTable from "@/components/editor/EscaletaTable";
 import ControlesAvanzadosSidebar from "@/components/editor/ControlesAvanzadosSidebar";
@@ -19,7 +20,7 @@ export default function EditorClient({
 }: EditorClientProps) {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
-  const { setEjecutarGuardado } = useEditorContext();
+  const { setEjecutarGuardado, setDatosImpresion } = useEditorContext();
 
   const {
     escaleta,
@@ -50,10 +51,16 @@ export default function EditorClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const bloquesConTiempos = calcularTiemposEscaleta(
-    escaleta?.hora_inicio_programa || "00:00",
-    bloques,
-  );
+  const bloquesConTiempos = useMemo(() => {
+    return calcularTiemposEscaleta(
+      escaleta?.hora_inicio_programa || "00:00",
+      bloques,
+    );
+  }, [escaleta?.hora_inicio_programa, bloques]);
+
+  useEffect(() => {
+    setDatosImpresion({ escaleta, bloques: bloquesConTiempos });
+  }, [escaleta, bloquesConTiempos, setDatosImpresion]);
 
   return (
     <>
