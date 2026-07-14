@@ -92,7 +92,10 @@
       "distrito-ph": "Selecciona tu distrito",
       "iglesia": "Iglesia",
       "iglesia-ph": "Selecciona tu iglesia",
-      "iglesia-libre-ph": "Nombre de tu iglesia"
+      "iglesia-libre-ph": "Nombre de tu iglesia",
+      "iglesia-no-en-lista": "Mi iglesia no está en la lista",
+      "iglesia-volver-lista": "Elegir de la lista",
+      "iglesia-manual-ph": "Escribe el nombre de tu iglesia"
     },
     "listo": {
       "title": "¡Todo listo para comenzar!",

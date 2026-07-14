@@ -36,6 +36,8 @@ export function useOnboarding(userId: string) {
   const [esMiembro, setEsMiembro] = useState<boolean | null>(null);
   const [seleccionOrg, setSeleccionOrg] = useState<SeleccionOrg | null>(null);
   const [iglesiaLibre, setIglesiaLibre] = useState("");
+  // Miembro cuya iglesia NO está en el árbol: la escribe a mano.
+  const [iglesiaManual, setIglesiaManual] = useState(false);
 
   const pasoActual = ORDEN_PASOS[pasoIndex];
 
@@ -52,8 +54,11 @@ export function useOnboarding(userId: string) {
   const eclesiasticaCompleta = useMemo(() => {
     if (esMiembro === null) return false;
     if (esMiembro === false) return iglesiaLibre.trim().length > 0;
+    // Miembro: o eligió una iglesia de la lista, o marcó "no aparece" y la
+    // escribió a mano.
+    if (iglesiaManual) return iglesiaLibre.trim().length > 0;
     return Boolean(seleccionOrg?.iglesiaId);
-  }, [esMiembro, iglesiaLibre, seleccionOrg]);
+  }, [esMiembro, iglesiaManual, iglesiaLibre, seleccionOrg]);
 
   const puedeAvanzar =
     (pasoActual === "personal" && personalCompleto) ||
@@ -74,6 +79,10 @@ export function useOnboarding(userId: string) {
     setGuardando(true);
     setErrorGuardado(null);
 
+    // Un miembro que escribe su iglesia a mano guarda el nombre en
+    // iglesia_libre y deja iglesia_id en null.
+    const usaManual = esMiembro === true && iglesiaManual;
+
     const { error } = await guardarOnboarding(userId, {
       nombre: personal.nombre,
       apellidos: personal.apellidos,
@@ -83,8 +92,8 @@ export function useOnboarding(userId: string) {
       unionId: seleccionOrg?.unionId,
       campoLocalId: seleccionOrg?.campoLocalId,
       distritoId: seleccionOrg?.distritoId,
-      iglesiaId: seleccionOrg?.iglesiaId,
-      iglesiaLibre: esMiembro === false ? iglesiaLibre : null,
+      iglesiaId: usaManual ? null : seleccionOrg?.iglesiaId,
+      iglesiaLibre: esMiembro === false || usaManual ? iglesiaLibre : null,
       pais: seleccionOrg?.pais ?? null,
       idiomaPreferente: currentLang,
     });
@@ -114,6 +123,8 @@ export function useOnboarding(userId: string) {
     setSeleccionOrg,
     iglesiaLibre,
     setIglesiaLibre,
+    iglesiaManual,
+    setIglesiaManual,
     eclesiasticaCompleta,
     // navegación / guardado
     puedeAvanzar,

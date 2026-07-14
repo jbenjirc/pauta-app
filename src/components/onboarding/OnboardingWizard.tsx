@@ -36,6 +36,8 @@ export default function OnboardingWizard({ userId }: { userId: string }) {
           onSeleccionOrg={ob.setSeleccionOrg}
           iglesiaLibre={ob.iglesiaLibre}
           setIglesiaLibre={ob.setIglesiaLibre}
+          iglesiaManual={ob.iglesiaManual}
+          setIglesiaManual={ob.setIglesiaManual}
           completa={ob.eclesiasticaCompleta}
           guardando={ob.guardando}
           error={ob.errorGuardado}

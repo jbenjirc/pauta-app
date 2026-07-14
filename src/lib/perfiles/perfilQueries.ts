@@ -16,7 +16,8 @@ export interface DatosOnboarding {
   distritoId?: string | null;
   iglesiaId?: string | null;
 
-  // No miembro:
+  // Iglesia en texto libre: para NO-miembros, o para miembros cuya iglesia
+  // aún no está en el árbol ("No aparece mi iglesia").
   iglesiaLibre?: string | null;
 
   // Derivados / preferencias:
@@ -46,9 +47,10 @@ export async function guardarOnboarding(
     distrito_id: datos.esMiembroAsd ? (datos.distritoId ?? null) : null,
     iglesia_id: datos.esMiembroAsd ? (datos.iglesiaId ?? null) : null,
 
-    iglesia_libre: !datos.esMiembroAsd
-      ? datos.iglesiaLibre?.trim() || null
-      : null,
+    // iglesia_libre se usa tanto para NO-miembros como para miembros cuya
+    // iglesia no está en el árbol (el hook decide cuándo mandarla; aquí solo
+    // se normaliza).
+    iglesia_libre: datos.iglesiaLibre?.trim() || null,
 
     pais: datos.pais ?? null,
     idioma_preferente: datos.idiomaPreferente,

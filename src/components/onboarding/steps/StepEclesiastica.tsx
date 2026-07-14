@@ -19,6 +19,8 @@ interface Props {
   onSeleccionOrg: (s: SeleccionOrg | null) => void;
   iglesiaLibre: string;
   setIglesiaLibre: (v: string) => void;
+  iglesiaManual: boolean;
+  setIglesiaManual: (v: boolean) => void;
   completa: boolean;
   guardando: boolean;
   error: string | null;
@@ -32,6 +34,8 @@ export default function StepEclesiastica({
   onSeleccionOrg,
   iglesiaLibre,
   setIglesiaLibre,
+  iglesiaManual,
+  setIglesiaManual,
   completa,
   guardando,
   error,
@@ -121,15 +125,49 @@ export default function StepEclesiastica({
             onChange={(id) => seleccionar("distrito", id)}
             placeholder={t("onboarding.org.distrito-ph")}
           />
-          <SelectField
-            label={t("onboarding.org.iglesia")}
-            value={niveles.iglesia.seleccionId}
-            opciones={niveles.iglesia.opciones}
-            cargando={niveles.iglesia.cargando}
-            disabled={!niveles.distrito.seleccionId}
-            onChange={(id) => seleccionar("iglesia", id)}
-            placeholder={t("onboarding.org.iglesia-ph")}
-          />
+          <div className="space-y-2">
+            <SelectField
+              label={t("onboarding.org.iglesia")}
+              value={niveles.iglesia.seleccionId}
+              opciones={niveles.iglesia.opciones}
+              cargando={niveles.iglesia.cargando}
+              disabled={!niveles.distrito.seleccionId || iglesiaManual}
+              onChange={(id) => seleccionar("iglesia", id)}
+              placeholder={t("onboarding.org.iglesia-ph")}
+            />
+
+            {/* Fallback: la iglesia del miembro aún no está en el árbol.
+                Disponible en cuanto hay distrito (el dropdown de iglesia ya
+                está habilitado, con o sin opciones). */}
+            {niveles.distrito.seleccionId && !iglesiaManual && (
+              <button
+                type="button"
+                onClick={() => setIglesiaManual(true)}
+                className="text-sm text-primary hover:underline"
+              >
+                {t("onboarding.org.iglesia-no-en-lista")}
+              </button>
+            )}
+
+            {iglesiaManual && (
+              <div className="space-y-2 pt-1">
+                <ValidatedInput
+                  label={t("onboarding.org.iglesia")}
+                  value={iglesiaLibre}
+                  onChange={setIglesiaLibre}
+                  placeholder={t("onboarding.org.iglesia-manual-ph")}
+                  estado={iglesiaLibre.trim() ? "valido" : "vacio"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setIglesiaManual(false)}
+                  className="text-sm text-muted hover:underline"
+                >
+                  {t("onboarding.org.iglesia-volver-lista")}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
