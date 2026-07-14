@@ -42,6 +42,9 @@
   --border-line: var(--cerulean);
   --brand-primary: var(--frosted-blue);
   --brand-text: #0d1b2a;
+
+  /* Claude Addition*/
+  --color-success: #3fb9a9;
 }
 
 /* =========================================
@@ -79,6 +82,13 @@
   --color-cerulean-900: #1b3445;
   --color-oxford-navy-100: #e3e8ee;
   --color-oxford-navy-900: #0a131f;
+
+  /* Fix Claude */
+  --color-main: var(--text-main);
+  --color-muted: var(--text-muted);
+  --color-line: var(--border-line);
+
+  --color-success: #2a9d8f;
 }
 
 /* =========================================

@@ -12,19 +12,6 @@
       "action-button": "Comienza ahora"
     }
   },
-  "registro": {
-    "registroForm": {
-      "title": "Crea tu cuenta",
-      "description": "Comienza a organizar las escaletas de tus programas en Pauta App",
-      "mail-title": "Correo electrónico",
-      "mail-placeholder": "correo@pauta.app",
-      "password-title": "Contraseña",
-      "password-placeholder": "•••••••••",
-      "submit-button": "Registrarse",
-      "login-text": "¿Ya tienes una cuenta?",
-      "login-link": "Inicia sesión"
-    }
-  },
   "entrar": {
     "entrarForm": {
       "title": "Bienvenido de vuelta",
@@ -36,6 +23,81 @@
       "submit-button": "Entrar",
       "register-text": "¿No tienes una cuenta?",
       "register-link": "Regístrate"
+    }
+  },
+  "validacion": {
+    "email": {
+      "formato": "Ingresa un correo válido (ejemplo@dominio.com)."
+    },
+    "password": {
+      "longitud": "Debe tener al menos 8 caracteres.",
+      "mayuscula": "Incluye al menos una letra mayúscula.",
+      "numero": "Incluye al menos un número."
+    }
+  },
+
+  "registro": {
+    "registroForm": {
+      "title": "Crea tu cuenta",
+      "description": "Comienza a organizar las escaletas de tus programas en Pauta App",
+      "mail-title": "Correo electrónico",
+      "mail-placeholder": "correo@pauta.app",
+      "password-title": "Contraseña",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Registrarse",
+      "loading": "Creando...",
+      "login-text": "¿Ya tienes una cuenta?",
+      "login-link": "Inicia sesión"
+    },
+    "verifica": {
+      "title": "Revisa tu correo",
+      "description": "Te enviamos un enlace de confirmación. Ábrelo para activar tu cuenta y continuar."
+    },
+    "confirmado": {
+      "title": "¡Cuenta confirmada!",
+      "description": "Te llevaremos a completar tu perfil en {s} segundos…",
+      "button": "Continuar ahora"
+    }
+  },
+
+  "onboarding": {
+    "continuar": "Continuar",
+    "atras": "Atrás",
+    "finalizar": "Finalizar",
+    "guardando": "Guardando...",
+    "personal": {
+      "title": "Información personal",
+      "subtitle": "Cuéntanos quién eres.",
+      "nombre": "Nombre",
+      "nombre-ph": "Tu nombre",
+      "apellidos": "Apellidos",
+      "apellidos-ph": "Tus apellidos",
+      "campo-perfil": "Campo de perfil (opcional)",
+      "campo-perfil-ph": "Ej. tu cargo o rol"
+    },
+    "eclesiastica": {
+      "title": "Información eclesiástica",
+      "pregunta": "¿Soy miembro de la Iglesia Adventista del Séptimo Día?",
+      "si": "Sí, soy miembro",
+      "no": "No soy miembro"
+    },
+    "org": {
+      "division": "División",
+      "division-ph": "Selecciona tu división",
+      "union": "Unión",
+      "union-ph": "Selecciona tu unión",
+      "campo": "Campo local",
+      "campo-ph": "Selecciona tu campo local",
+      "distrito": "Distrito",
+      "distrito-ph": "Selecciona tu distrito",
+      "iglesia": "Iglesia",
+      "iglesia-ph": "Selecciona tu iglesia",
+      "iglesia-libre-ph": "Nombre de tu iglesia"
+    },
+    "listo": {
+      "title": "¡Todo listo para comenzar!",
+      "description": "Te llevaremos a tu inicio en {s} segundos…",
+      "button": "¡Quiero empezar!"
     }
   }
 }
