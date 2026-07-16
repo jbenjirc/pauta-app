@@ -52,13 +52,6 @@ export default function StepPersonal({
         autoComplete="family-name"
       />
 
-      <ValidatedInput
-        label={t("onboarding.personal.campo-perfil")}
-        value={datos.campoPerfil}
-        onChange={(v) => set("campoPerfil", v)}
-        placeholder={t("onboarding.personal.campo-perfil-ph")}
-      />
-
       <button
         onClick={onSiguiente}
         disabled={!puedeAvanzar}

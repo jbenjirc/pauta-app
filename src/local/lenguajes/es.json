@@ -71,9 +71,7 @@
       "nombre": "Nombre",
       "nombre-ph": "Tu nombre",
       "apellidos": "Apellidos",
-      "apellidos-ph": "Tus apellidos",
-      "campo-perfil": "Campo de perfil (opcional)",
-      "campo-perfil-ph": "Ej. tu cargo o rol"
+      "apellidos-ph": "Tus apellidos"
     },
     "eclesiastica": {
       "title": "Información eclesiástica",
@@ -101,6 +99,58 @@
       "title": "¡Todo listo para comenzar!",
       "description": "Te llevaremos a tu inicio en {s} segundos…",
       "button": "¡Quiero empezar!"
+    }
+  },
+
+  "configuracion": {
+    "titulo": "Configuración",
+    "subtitulo": "Gestiona tu perfil, tu cuenta y tus preferencias.",
+    "guardar": "Guardar cambios",
+    "guardando": "Guardando…",
+    "guardado": "Guardado ✓",
+    "error-carga": "No pudimos cargar tu perfil. Recarga la página o intenta más tarde.",
+    "pendiente": "en construcción",
+
+    "perfil": {
+      "titulo": "Perfil",
+      "descripcion": "Tu información básica y cómo te ven los demás.",
+      "foto": "Foto de perfil",
+      "foto-cambiar": "Cambiar foto",
+      "foto-quitar": "Quitar",
+      "foto-subiendo": "Subiendo…",
+      "foto-ayuda": "JPG, PNG o WEBP",
+      "foto-tipo-invalido": "Formato no admitido. Usa JPG, PNG o WEBP.",
+      "foto-muy-grande": "La imagen supera el tamaño máximo.",
+      "pais": "País",
+      "pais-ph": "Selecciona tu país"
+    },
+
+    "eclesiastico": {
+      "titulo": "Eclesiástico",
+      "descripcion": "Tu iglesia y su ubicación en la organización."
+    },
+
+    "seguridad": {
+      "titulo": "Seguridad y privacidad",
+      "descripcion": "Tu correo, tu contraseña y tus datos."
+    },
+
+    "aplicacion": {
+      "titulo": "Aplicación",
+      "descripcion": "Cómo se ve y en qué idioma te habla la app.",
+      "idioma": "Idioma",
+      "idioma-ayuda": "Se guarda en tu cuenta y te acompaña en todos tus dispositivos.",
+      "tema": "Tema",
+      "tema-claro": "Claro",
+      "tema-oscuro": "Oscuro",
+      "tema-sistema": "Sistema",
+      "tema-ayuda": "«Sistema» sigue la preferencia de tu dispositivo. Tu elección se guarda en tu cuenta.",
+      "paleta": "Paleta"
+    },
+
+    "peligro": {
+      "titulo": "Zona de peligro",
+      "descripcion": "Acciones irreversibles sobre tu cuenta."
     }
   }
 }

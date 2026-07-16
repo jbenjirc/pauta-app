@@ -14,7 +14,6 @@ const ORDEN_PASOS: PasoOnboarding[] = ["personal", "eclesiastica", "listo"];
 export interface DatosPersonales {
   nombre: string;
   apellidos: string;
-  campoPerfil: string;
 }
 
 export function useOnboarding(userId: string) {
@@ -28,7 +27,6 @@ export function useOnboarding(userId: string) {
   const [personal, setPersonal] = useState<DatosPersonales>({
     nombre: "",
     apellidos: "",
-    campoPerfil: "",
   });
 
   // --- Datos del paso 2 -----------------------------------------------------
@@ -86,7 +84,6 @@ export function useOnboarding(userId: string) {
     const { error } = await guardarOnboarding(userId, {
       nombre: personal.nombre,
       apellidos: personal.apellidos,
-      campoPerfil: personal.campoPerfil,
       esMiembroAsd: esMiembro === true,
       divisionId: seleccionOrg?.divisionId,
       unionId: seleccionOrg?.unionId,
