@@ -84,6 +84,9 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // Se excluyen /auth (el callback de verificación debe correr sin que el
+    // middleware intercepte antes de intercambiar el code) y /registro (las
+    // pantallas de confirmación/verificación son públicas y no deben redirigir).
+    "/((?!_next/static|_next/image|favicon.ico|auth|registro|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
