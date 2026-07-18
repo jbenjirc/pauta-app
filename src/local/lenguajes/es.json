@@ -12,19 +12,6 @@
       "action-button": "Comienza ahora"
     }
   },
-  "registro": {
-    "registroForm": {
-      "title": "Crea tu cuenta",
-      "description": "Comienza a organizar las escaletas de tus programas en Pauta App",
-      "mail-title": "Correo electrónico",
-      "mail-placeholder": "correo@pauta.app",
-      "password-title": "Contraseña",
-      "password-placeholder": "•••••••••",
-      "submit-button": "Registrarse",
-      "login-text": "¿Ya tienes una cuenta?",
-      "login-link": "Inicia sesión"
-    }
-  },
   "entrar": {
     "entrarForm": {
       "title": "Bienvenido de vuelta",
@@ -37,5 +24,167 @@
       "register-text": "¿No tienes una cuenta?",
       "register-link": "Regístrate"
     }
+  },
+  "validacion": {
+    "email": {
+      "formato": "Ingresa un correo válido (ejemplo@dominio.com)."
+    },
+    "password": {
+      "longitud": "Debe tener al menos 8 caracteres.",
+      "mayuscula": "Incluye al menos una letra mayúscula.",
+      "numero": "Incluye al menos un número."
+    }
+  },
+
+  "registro": {
+    "registroForm": {
+      "title": "Crea tu cuenta",
+      "description": "Comienza a organizar las escaletas de tus programas en Pauta App",
+      "mail-title": "Correo electrónico",
+      "mail-placeholder": "correo@pauta.app",
+      "password-title": "Contraseña",
+      "password-placeholder": "•••••••••",
+      "submit-button": "Registrarse",
+      "loading": "Creando...",
+      "login-text": "¿Ya tienes una cuenta?",
+      "login-link": "Inicia sesión"
+    },
+    "verifica": {
+      "title": "Revisa tu correo",
+      "description": "Te enviamos un enlace de confirmación. Ábrelo para activar tu cuenta y continuar."
+    },
+    "confirmado": {
+      "title": "¡Cuenta confirmada!",
+      "description": "Te llevaremos a completar tu perfil en {s} segundos…",
+      "button": "Continuar ahora"
+    }
+  },
+
+  "onboarding": {
+    "continuar": "Continuar",
+    "atras": "Atrás",
+    "finalizar": "Finalizar",
+    "guardando": "Guardando...",
+    "personal": {
+      "title": "Información personal",
+      "subtitle": "Cuéntanos quién eres.",
+      "nombre": "Nombre",
+      "nombre-ph": "Tu nombre",
+      "apellidos": "Apellidos",
+      "apellidos-ph": "Tus apellidos"
+    },
+    "eclesiastica": {
+      "title": "Información eclesiástica",
+      "pregunta": "¿Soy miembro de la Iglesia Adventista del Séptimo Día?",
+      "si": "Sí, soy miembro",
+      "no": "No soy miembro"
+    },
+    "org": {
+      "division": "División",
+      "division-ph": "Selecciona tu división",
+      "union": "Unión",
+      "union-ph": "Selecciona tu unión",
+      "campo": "Campo local",
+      "campo-ph": "Selecciona tu campo local",
+      "distrito": "Distrito",
+      "distrito-ph": "Selecciona tu distrito",
+      "iglesia": "Iglesia",
+      "iglesia-ph": "Selecciona tu iglesia",
+      "iglesia-libre-ph": "Nombre de tu iglesia",
+      "iglesia-no-en-lista": "Mi iglesia no está en la lista",
+      "iglesia-volver-lista": "Elegir de la lista",
+      "iglesia-manual-ph": "Escribe el nombre de tu iglesia"
+    },
+    "listo": {
+      "title": "¡Todo listo para comenzar!",
+      "description": "Te llevaremos a tu inicio en {s} segundos…",
+      "button": "¡Quiero empezar!"
+    }
+  },
+
+  "configuracion": {
+    "titulo": "Configuración",
+    "subtitulo": "Gestiona tu perfil, tu cuenta y tus preferencias.",
+    "guardar": "Guardar cambios",
+    "guardando": "Guardando…",
+    "guardado": "Guardado ✓",
+    "error-carga": "No pudimos cargar tu perfil. Recarga la página o intenta más tarde.",
+    "pendiente": "en construcción",
+
+    "perfil": {
+      "titulo": "Perfil",
+      "descripcion": "Tu información básica y cómo te ven los demás.",
+      "foto": "Foto de perfil",
+      "foto-cambiar": "Cambiar foto",
+      "foto-quitar": "Quitar",
+      "foto-subiendo": "Subiendo…",
+      "foto-ayuda": "JPG, PNG o WEBP",
+      "foto-tipo-invalido": "Formato no admitido. Usa JPG, PNG o WEBP.",
+      "foto-muy-grande": "La imagen supera el tamaño máximo.",
+      "pais": "País",
+      "pais-ph": "Selecciona tu país"
+    },
+
+    "eclesiastico": {
+      "titulo": "Eclesiástico",
+      "descripcion": "Tu iglesia y su ubicación en la organización."
+    },
+
+    "seguridad": {
+      "titulo": "Seguridad y privacidad",
+      "descripcion": "Tu correo, tu contraseña y tus datos."
+    },
+
+    "aplicacion": {
+      "titulo": "Aplicación",
+      "descripcion": "Cómo se ve y en qué idioma te habla la app.",
+      "idioma": "Idioma",
+      "idioma-ayuda": "Se guarda en tu cuenta y te acompaña en todos tus dispositivos.",
+      "tema": "Tema",
+      "tema-claro": "Claro",
+      "tema-oscuro": "Oscuro",
+      "tema-sistema": "Sistema",
+      "tema-ayuda": "«Sistema» sigue la preferencia de tu dispositivo. Tu elección se guarda en tu cuenta.",
+      "paleta": "Paleta"
+    },
+
+    "peligro": {
+      "titulo": "Zona de peligro",
+      "descripcion": "Acciones irreversibles sobre tu cuenta."
+    }
+  },
+  "feedback": {
+    "titulo": "Enviar comentarios",
+    "subtitulo": "¿Algo no funciona? ¿Se te ocurre una mejora? Cuéntanos.",
+
+    "tipo": "¿De qué se trata?",
+    "tipo-error": "Un error",
+    "tipo-idea": "Una idea",
+    "tipo-pregunta": "Una duda",
+    "tipo-general": "Otro",
+
+    "mensaje": "Tu comentario",
+    "mensaje-ph": "Cuéntanos con detalle. Si es un error, ¿qué estabas haciendo cuando ocurrió?",
+
+    "enviar": "Enviar comentario",
+    "enviando": "Enviando…",
+
+    "gracias": "¡Gracias por escribirnos!",
+    "gracias-detalle": "Leemos todos los comentarios. Puedes enviarnos otro cuando quieras.",
+    "enviar-otro": "Enviar otro comentario",
+
+    "que-se-envia": "¿Qué se envía junto a mi comentario?",
+    "detalle-perfil": "Tu nombre, país e iglesia (para entender tu contexto)",
+    "detalle-ruta": "La pantalla desde la que escribes y datos técnicos de tu navegador",
+    "abrir": "Feedback",
+    "cerrar": "Cerrar",
+    "agregar-imagen": "Agregar imagen",
+    "quitar-imagen": "Quitar imagen",
+    "aviso-datos": "Al enviar se incluirán datos de tu navegador y sesión para mejorar la herramienta.",
+    "aviso-detalle": "Ver detalle",
+    "img-tipo": "Formato no admitido (usa PNG, JPG o WEBP).",
+    "img-grande": "La imagen supera el tamaño máximo.",
+    "img-tope": "Máximo 4 imágenes.",
+    "img-fallo": "No se pudo subir una imagen. Intenta de nuevo."
   }
 }
