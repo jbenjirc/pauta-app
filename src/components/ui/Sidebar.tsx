@@ -13,6 +13,7 @@ import {
   Compass,
 } from "lucide-react";
 import PerfilMultitool from "./PerfilMultitool";
+import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
 interface SidebarProps {
   onOpenCreateModal: () => void;
@@ -147,6 +148,14 @@ export default function Sidebar({ onOpenCreateModal }: SidebarProps) {
       </div>
 
       <div className="mt-auto p-4 flex flex-col gap-2 border-t border-line">
+        {/* Encima de Perfil. En sidebar el panel se abre hacia la derecha
+            (horizontal); si está colapsado, sólo icono. */}
+        <FeedbackWidget
+          orientacion="horizontal"
+          lado="derecha"
+          soloIcono={colapsado}
+          className="w-full"
+        />
         <PerfilMultitool colapsado={colapsado} />
       </div>
     </aside>

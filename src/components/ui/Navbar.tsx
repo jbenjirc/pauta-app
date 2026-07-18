@@ -10,6 +10,7 @@ import { useTranslation } from "@/contextos/LanguageContext";
 import { useTheme } from "next-themes";
 import { useSession } from "@/contextos/SessionContext";
 import UserNavbarMenu from "./UserNavbarMenu"; // <-- El nuevo componente
+import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -57,6 +58,9 @@ export default function Navbar() {
                 <Moon className="w-4 h-4" />
               ))}
           </button>
+
+          {/* Feedback: a la izquierda de Idioma. Sólo visible si hay sesión. */}
+          {user && <FeedbackWidget orientacion="vertical" lado="abajo" />}
 
           <button
             onClick={() => setIsLangOpen(true)}

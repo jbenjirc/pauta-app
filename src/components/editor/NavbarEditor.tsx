@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import ModalImprimir from "@/components/editor/modals/ModalImprimir";
 import { useEditorContext } from "@/contextos/EditorContext";
+import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
 export default function NavbarEditor() {
   const [isPrintOpen, setIsPrintOpen] = useState(false);
@@ -56,6 +57,8 @@ export default function NavbarEditor() {
           >
             <Moon className="w-4 h-4" />
           </button>
+
+          <FeedbackWidget orientacion="vertical" lado="abajo" soloIcono />
 
           <button
             onClick={() => setIsPrintOpen(true)}

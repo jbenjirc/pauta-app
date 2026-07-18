@@ -152,5 +152,39 @@
       "titulo": "Zona de peligro",
       "descripcion": "Acciones irreversibles sobre tu cuenta."
     }
+  },
+  "feedback": {
+    "titulo": "Enviar comentarios",
+    "subtitulo": "¿Algo no funciona? ¿Se te ocurre una mejora? Cuéntanos.",
+
+    "tipo": "¿De qué se trata?",
+    "tipo-error": "Un error",
+    "tipo-idea": "Una idea",
+    "tipo-pregunta": "Una duda",
+    "tipo-general": "Otro",
+
+    "mensaje": "Tu comentario",
+    "mensaje-ph": "Cuéntanos con detalle. Si es un error, ¿qué estabas haciendo cuando ocurrió?",
+
+    "enviar": "Enviar comentario",
+    "enviando": "Enviando…",
+
+    "gracias": "¡Gracias por escribirnos!",
+    "gracias-detalle": "Leemos todos los comentarios. Puedes enviarnos otro cuando quieras.",
+    "enviar-otro": "Enviar otro comentario",
+
+    "que-se-envia": "¿Qué se envía junto a mi comentario?",
+    "detalle-perfil": "Tu nombre, país e iglesia (para entender tu contexto)",
+    "detalle-ruta": "La pantalla desde la que escribes y datos técnicos de tu navegador",
+    "abrir": "Feedback",
+    "cerrar": "Cerrar",
+    "agregar-imagen": "Agregar imagen",
+    "quitar-imagen": "Quitar imagen",
+    "aviso-datos": "Al enviar se incluirán datos de tu navegador y sesión para mejorar la herramienta.",
+    "aviso-detalle": "Ver detalle",
+    "img-tipo": "Formato no admitido (usa PNG, JPG o WEBP).",
+    "img-grande": "La imagen supera el tamaño máximo.",
+    "img-tope": "Máximo 4 imágenes.",
+    "img-fallo": "No se pudo subir una imagen. Intenta de nuevo."
   }
 }
